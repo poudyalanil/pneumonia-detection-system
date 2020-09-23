@@ -11,6 +11,7 @@ pylint==2.5.3
 Pyrebase==3.0.27
 pytz==2020.1
 requests-toolbelt==0.7.0
+six==1.15.0
 sqlparse==0.3.1
 toml==0.10.1
 wincertstore==0.2
