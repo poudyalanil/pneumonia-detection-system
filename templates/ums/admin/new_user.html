@@ -1,0 +1,17 @@
+{%extends 'ums/admin/admin_base.html'%}
+{%block head%}
+<title>New User</title>
+{%endblock%}
+
+{%block content%}
+<form method="POST" enctype="multipart/form-data">
+
+{%csrf_token%}
+{{main_form}}
+{{normal_form}}
+
+<button  type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+{%endblock%}

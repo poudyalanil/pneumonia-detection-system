@@ -20,7 +20,8 @@ urlpatterns = [
 
     path('admin',views.admin_dashboard,name='admin_dashboard'),
     path('admin/new-usr',views.new_user,name="new_user"),
-    path('admin/user/del/<int:id>',views.delete_user,name='delete_user'),
-    path('admin/user/edit/<int:id>',views.edit_user,name='edit_user'),
+    path('admin/usr/del/<int:pk>',views.delete_user,name='delete_user'),
+    path('admin/usr/edit/<int:pk>',views.edit_user,name='edit_user'),
+    path('admin/mg-usr',views.all_users,name='all_users'),
 ]
 
