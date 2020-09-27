@@ -84,6 +84,9 @@ def edit_profile(requests):
 ##### admin side  ####
 ######################
 
+def admin_dashboard(requests):
+      return render(requests,'ums/admin_base.html')
+
 def new_user(requests):
       #url: /admin/new-usr/
       #TODO
