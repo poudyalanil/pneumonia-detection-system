@@ -45,7 +45,7 @@ def logout(requests):
 def user_homepage(requests):
       #url: /usr/home
       #TODO
-    return render(requests,'ums/dashboard.html')
+    return render(requests,'ums/user/user_dashboard.html')
 
 def all_patients(requests):
       #url: /usr/patients/
@@ -85,12 +85,12 @@ def edit_profile(requests):
 ######################
 
 def admin_dashboard(requests):
-      return render(requests,'ums/admin_base.html')
+      return render(requests,'ums/admin/admin_dashboard.html')
 
 def new_user(requests):
       #url: /admin/new-usr/
       #TODO
-    return render(requests,"ums/new_user.html")
+    return render(requests,"ums/admin/new_user.html")
 
 def delete_user(requests):
       #url: /admin/usr/del/<id>
