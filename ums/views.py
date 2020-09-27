@@ -2,7 +2,7 @@ from django.contrib.auth.backends import RemoteUserBackend
 from django.http import request
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import  authenticate
+from django.contrib.auth import  authenticate, logout
 from django.contrib import messages
 # Create your views here.
 
@@ -32,9 +32,9 @@ def sign_in(requests):
     return render(requests,'ums/login.html')
 
 def logout(requests):
-      #url: /logout/<id>
-      #TODO
-      pass
+    #url: /logout
+    logout(requests)
+    return redirect('homepage')
 
 
 
@@ -67,10 +67,15 @@ def support(requests):
       #TODO
       pass
 
-def usr_profile(requests):
+def user_profile(requests):
       #url: /usr/profile/<id>
       #TODO
       pass
+def edit_profile(requests):
+    #url: /usr/profile/edt/<id>
+    #TODO
+    pass
+
 
 
 
@@ -84,11 +89,11 @@ def new_user(requests):
       #TODO
     return render(requests,"ums/new_user.html")
 
-def delete_usr(requests):
+def delete_user(requests):
       #url: /admin/usr/del/<id>
         #TODO
       pass
-def edit_usr(request):
+def edit_user(request):
       #url: /admin/usr/edit/<id>
       #TODO
       pass
