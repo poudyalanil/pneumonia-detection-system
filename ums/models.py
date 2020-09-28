@@ -9,7 +9,8 @@ class Normal_User(models.Model):
     phone = models.CharField(max_length=200, null=True)
     gender = models.CharField(max_length=20)
     country = models.CharField(max_length=20, default="Nepal")
-    
+    profile_pic= models.ImageField( null = True,blank =True)
+
 
 
     def __str__(self):

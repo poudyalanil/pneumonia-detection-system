@@ -129,3 +129,10 @@ STATICFILES_DIRS = [
     # '/var/www/static/',
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,"static_files")
+
+# Media root for uploading 
+
+
+
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')

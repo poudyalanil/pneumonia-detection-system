@@ -3,7 +3,7 @@ from ums.models import Normal_User
 from django.contrib.auth.models import User
 
 
-class registerform(forms.ModelForm):
+class Register_Form(forms.ModelForm):
     email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput)
 
@@ -20,7 +20,7 @@ class registerform(forms.ModelForm):
             return user
 
 
-class customerform(forms.ModelForm):
+class Normal_User_Form(forms.ModelForm):
     class Meta:
         model = Normal_User
-        fields = ['phone', 'gender', 'country']
+        fields = ['phone', 'gender', 'country','profile_pic']
