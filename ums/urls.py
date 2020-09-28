@@ -8,7 +8,6 @@ urlpatterns = [
     path('logout',views.logout,name='logout'),
     path('login',views.sign_in, name="sign_in"),
 
-
     path('usr/home',views.user_homepage, name="user_homepage"),
     path('usr/patients',views.all_patients,name='all_patients'),
     path('usr/new',views.new_test,name='new_test'),
@@ -23,5 +22,7 @@ urlpatterns = [
     path('admin/usr/del/<int:pk>',views.delete_user,name='delete_user'),
     path('admin/usr/edit/<int:pk>',views.edit_user,name='edit_user'),
     path('admin/mg-usr',views.all_users,name='all_users'),
+    path('admin/usr/block/<int:pk>',views.toggle_block,name='toggle_block'),
+
 ]
 

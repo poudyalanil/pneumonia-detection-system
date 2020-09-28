@@ -6,6 +6,7 @@ from django.contrib.auth import  authenticate, logout, login
 from django.contrib import messages
 from .forms import Register_Form, Normal_User_Form 
 from django.contrib.auth.models import User
+from .models import Normal_User
 # Create your views here.
 
 
@@ -90,7 +91,7 @@ def admin_dashboard(requests):
 def new_user(requests):
       if requests.POST:
             main_form  = Register_Form(requests.POST)
-            normal_form = Normal_User_Form(requests.POST)
+            normal_form = Normal_User_Form(requests.POST,requests.FILES)
 
             try:
                   user = User.objects.get(username= requests.POST['username'])
@@ -116,20 +117,44 @@ def new_user(requests):
                   
       return render(requests,"ums/admin/new_user.html",context)
 
+
+     
+def edit_user(request,pk):
+      user = User.objects.get(pk = pk)
+      
+
+
+
+      #url: /admin/usr/edit/<id>
+      #TODO
+      pass
+
+def all_users(requests):
+      users = Normal_User.objects.all()
+      # for user in users:
+            # print(user__.profile_pic)
+      return render(requests,"ums/admin/manage_users.html",{'users':users})
+
 def delete_user(requests, pk):
       user = User.objects.get(pk=pk)
       print(pk)
       user.delete()
       return redirect('all_users')
       #url: /admin/usr/del/<id>
-     
-def edit_user(request):
-      #url: /admin/usr/edit/<id>
+
+def toggle_block(requests,pk):
       #TODO
       pass
+      # user = User.objects.get(pk=pk)
+      # print(user.is_active)
+      # if user.is_active:
+      #       user.is_active = False
 
-def all_users(requests):
-      users = User.objects.all()
-      return render(requests,"ums/admin/manage_users.html",{'users':users})
+      # else:
+      #       user.is_active = True
+      
+
+      # return redirect('all_users')
+
 
 
