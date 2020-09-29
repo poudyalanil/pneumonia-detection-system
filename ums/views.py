@@ -8,10 +8,12 @@ from django.contrib import messages
 from .forms import Register_Form, Normal_User_Form, User_Update_Form,Normal_User_Update_Form
 from django.contrib.auth.models import User
 from .models import Normal_User
+from django.core.mail import send_mail
 # from .decorators import login_required
 
 from django.contrib.auth.decorators import login_required
 from .decorators import admin_required
+import random, string
 # Create your views here.
 
 
@@ -100,7 +102,7 @@ def edit_profile(requests):
 # @admin_required()
 def admin_dashboard(requests):
 
-      print(requests.user.normal_user.profile_pic)
+      # print(requests.user.normal_user.profile_pic)
       normal_users = User.objects.filter(is_staff = False).count()
       admin_users = User.objects.filter(is_staff=True).count()
 
@@ -177,6 +179,30 @@ def edit_user(requests,pk):
       }
 
       return render(requests,"ums/admin/edit_user.html",context)
+
+def reset_password(request,pk):
+      user = User.objects.get(pk=pk)
+      new_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+      
+      if user:
+            user.set_password(new_password)
+            user.save()
+
+            send_mail(
+            'Password Reset',
+            f'Your new Password for PDS is {new_password}',
+            'anilfyp@gmail.com',
+            [user.email],
+            fail_silently=False,)
+
+      return redirect("all_users")
+
+
+
+
+
+
+
 
 @login_required(login_url='/login')
 def all_users(requests):

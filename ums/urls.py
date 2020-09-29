@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/usr/edit/<int:pk>',views.edit_user,name='edit_user'),
     path('admin/mg-usr',views.all_users,name='all_users'),
     path('admin/usr/block/<int:pk>',views.toggle_block,name='toggle_block'),
+    path('admin/usr/reset/<int:pk>',views.reset_password,name='reset_password'),
 
 ]
 
