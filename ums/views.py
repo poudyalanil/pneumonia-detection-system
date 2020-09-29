@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import  authenticate, logout, login
 from django.contrib import messages
-from .forms import Register_Form, Normal_User_Form 
+from .forms import Register_Form, Normal_User_Form, User_Update_Form,Normal_User_Update_Form
 from django.contrib.auth.models import User
 from .models import Normal_User
 # from .decorators import login_required
@@ -129,11 +129,11 @@ def new_user(requests):
                         normal_user.save()
 
 
-                        username = main_form.cleaned_data.get('username')
-                        password = main_form.cleaned_data.get('password')
+                        # username = main_form.cleaned_data.get('username')
+                        # password = main_form.cleaned_data.get('password')
 
-                        user = authenticate(username=username,password=password)
-                        login(requests,user)
+                        # user = authenticate(username=username,password=password)
+                        # login(requests,user)
                         return redirect(new_user)
       else:
             main_form = Register_Form()
@@ -144,15 +144,40 @@ def new_user(requests):
 
 
 @login_required(login_url='/login')
-def edit_user(request,pk):
+def edit_user(requests,pk):
       user = User.objects.get(pk = pk)
+      print(user)
+      print(pk)
+      # register_form = User_Update_Form
+      # normal_form =Normal_User_Update_Form
+
+      print(user.normal_user.phone)
       
+      if requests.POST:
+                  
+            update_user_form = User_Update_Form(data=requests.POST, instance=user)
+            update_normal_form = Normal_User_Update_Form(requests.POST, requests.FILES ,instance=user.normal_user)
 
+            if update_normal_form.is_valid() and update_normal_form.is_valid():
+                  updated_user = update_user_form.save()
+                  normal_user = update_normal_form.save(commit=False)
+                  normal_user.user= updated_user
+                  normal_user.save()
 
+                  return redirect("all_users")
 
-      #url: /admin/usr/edit/<id>
-      #TODO
-      pass
+      else:
+            update_user_form = User_Update_Form(instance=user)
+            update_normal_form = Normal_User_Update_Form(instance=user.normal_user)
+            
+
+      context = {
+            'update_normal_form':update_normal_form,
+            'update_register_form':update_user_form
+      }
+
+      return render(requests,"ums/admin/edit_user.html",context)
+
 @login_required(login_url='/login')
 def all_users(requests):
       users = Normal_User.objects.all()
