@@ -1,8 +1,46 @@
 {%extends 'ums/admin/admin_base.html'%}
 {%block head%}
 <title>Admin| Dashboard</title>
+
+<style>
+
+    .card{
+        background-image: url(https://i.imgur.com/kgDsRym.jpg);
+        background-repeat:no-repeat;
+        background-size:cover;
+        /* filter: blur(5px); */
+    }
+    
+</style>
+
 {%endblock%}
 
 {%block content%}
-Admin Dashboard
+
+
+<div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title" style="color: white;">{{normal_user_count}}</h1>
+          <h3 class="card-text" style="color: white;">Total Numbers of Normal Users</h3>
+          <a href="#" class="btn btn-primary">Manage Normal Users</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title" style="color: white;">{{admin_user_count}}</h1>
+          <h3 class="card-text" style="color: white;">Total Numbers of Admin Users</h3>
+          <a href="#" class="btn btn-primary">Manage Admins</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
 {%endblock%}

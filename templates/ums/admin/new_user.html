@@ -1,17 +1,35 @@
 {%extends 'ums/admin/admin_base.html'%}
+{% load crispy_forms_tags %}
 {%block head%}
 <title>New User</title>
+
+<style>
+
+    input{
+        border-bottom: 0.5px solid grey;
+    }
+</style>
+
 {%endblock%}
 
 {%block content%}
+<div class="container">
 <form method="POST" enctype="multipart/form-data">
 
 {%csrf_token%}
-{{main_form}}
-{{normal_form}}
+{{main_form |crispy}}
+{{normal_form |crispy}}
 
-<button  type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+
+
+
+
+
 
 
 {%endblock%}

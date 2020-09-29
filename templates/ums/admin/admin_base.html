@@ -25,20 +25,31 @@
         </div>
 	  		<div class="img bg-wrap text-center py-4" style="background-image: url(https://picsum.photos/200/300);">
 	  			<div class="user-logo">
-            <div class="img" style="background-image: url(https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY
-            );"></div>
-	  				<h3>Catriona Henderson</h3>
+
+            {%if request.user.normal_user.profile_pic%}
+
+            <div class="img" style="background-image:url('/images/{{user.normal_user.profile_pic}}')"></div>
+            {%else%}
+            <div class="img" style="background-image: url(
+              https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY);"></div>
+            {%endif%}
+
+          
+	  				<h3>
+
+              {{request.user.first_name}} {{request.user.last_name}}
+            </h3>
 	  			</div>
 	  		</div>
         <ul class="list-unstyled components mb-5">
           <li>
-            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+            <a href="/admin"><span class="fa fa-home mr-3"></span> Home</a>
           </li>
           <li>
               <a href="#"><span class="fa fa-comments mr-3 notif"><small class="d-flex align-items-center justify-content-center">5</small></span> Support Message</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-users mr-3"></span> Users</a>
+            <a href="/admin/mg-usr"><span class="fa fa-users mr-3"></span> Users</a>
           </li>
           <li>
             <a href="#"><span class="fa fa-user mr-3"></span> Profile</a>
@@ -49,7 +60,7 @@
           
           
           <li>
-            <a href="#"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+            <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
           </li>
         </ul>
 
