@@ -1,4 +1,5 @@
 from django.contrib.auth.backends import RemoteUserBackend
+from django.db.models.aggregates import Count
 from django.http import request
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -7,7 +8,13 @@ from django.contrib import messages
 from .forms import Register_Form, Normal_User_Form 
 from django.contrib.auth.models import User
 from .models import Normal_User
+# from .decorators import login_required
+
+from django.contrib.auth.decorators import login_required
+from .decorators import admin_required
 # Create your views here.
+
+
 
 
 ######################
@@ -34,7 +41,8 @@ def sign_in(requests):
 
     return render(requests,'ums/login.html')
 
-def logout(requests):
+@login_required(login_url='/login')
+def log_out(requests):
     #url: /logout
     logout(requests)
     return redirect('homepage')
@@ -44,36 +52,38 @@ def logout(requests):
 ######################
 ##### user side   ####
 ######################
-
+@login_required(login_url='/login')
 def user_homepage(requests):
       #url: /usr/home
       #TODO
     return render(requests,'ums/user/user_dashboard.html')
 
+@login_required(login_url='/login')
 def all_patients(requests):
       #url: /usr/patients/
       #TODO
       pass
-
+@login_required(login_url='/login')
 def new_test(requests):
       #url: /usr/new/
       #TODO
       pass
-
+@login_required(login_url='/login')
 def stats(requests):
       #url: /usr/stats/
       #TODO
       pass
-
+@login_required(login_url='/login')
 def support(requests):
       #url: /usr/support/
       #TODO
       pass
-
+@login_required(login_url='/login')
 def user_profile(requests):
       #url: /usr/profile/<id>
       #TODO
       pass
+@login_required(login_url='/login')
 def edit_profile(requests):
     #url: /usr/profile/edt/<id>
     #TODO
@@ -85,9 +95,24 @@ def edit_profile(requests):
 ##### admin side  ####
 ######################
 
-def admin_dashboard(requests):
-      return render(requests,'ums/admin/admin_dashboard.html')
 
+@login_required(login_url='/login')
+# @admin_required()
+def admin_dashboard(requests):
+
+      print(requests.user.normal_user.profile_pic)
+      normal_users = User.objects.filter(is_staff = False).count()
+      admin_users = User.objects.filter(is_staff=True).count()
+
+      context = {
+            'normal_user_count':normal_users,
+            'admin_user_count':admin_users,
+      }
+
+      return render(requests,'ums/admin/admin_dashboard.html', context=context)
+
+
+@login_required(login_url='/login')
 def new_user(requests):
       if requests.POST:
             main_form  = Register_Form(requests.POST)
@@ -118,7 +143,7 @@ def new_user(requests):
       return render(requests,"ums/admin/new_user.html",context)
 
 
-     
+@login_required(login_url='/login')
 def edit_user(request,pk):
       user = User.objects.get(pk = pk)
       
@@ -128,13 +153,14 @@ def edit_user(request,pk):
       #url: /admin/usr/edit/<id>
       #TODO
       pass
-
+@login_required(login_url='/login')
 def all_users(requests):
       users = Normal_User.objects.all()
       # for user in users:
             # print(user__.profile_pic)
       return render(requests,"ums/admin/manage_users.html",{'users':users})
 
+@login_required(login_url='/login')
 def delete_user(requests, pk):
       user = User.objects.get(pk=pk)
       print(pk)
@@ -142,19 +168,37 @@ def delete_user(requests, pk):
       return redirect('all_users')
       #url: /admin/usr/del/<id>
 
-def toggle_block(requests,pk):
-      #TODO
-      pass
-      # user = User.objects.get(pk=pk)
-      # print(user.is_active)
-      # if user.is_active:
-      #       user.is_active = False
+@login_required(login_url='/login')
+def toggle_admin(requests,pk):
+      user = User.objects.get(pk=pk)
+      
+      if user.is_staff:
+            user.is_staff = False
+            user.save()
+      else:
+            user.is_staff = True
+            user.save()
 
-      # else:
-      #       user.is_active = True
+
+
+@login_required(login_url='/login')
+def toggle_block(requests,pk):
+     
+      user = User.objects.get(pk=pk)
+     
+      print(user)
+      if user.is_active:
+            user.update(is_active= False)
+            # user.save()
+            return redirect('all_users')
+
+      else:
+            user.is_active = True
+            user.save()
+            return redirect('all_users')
       
 
-      # return redirect('all_users')
+      return redirect('all_users')
 
 
 

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ums',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -132,7 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static_files")
 
 # Media root for uploading 
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
