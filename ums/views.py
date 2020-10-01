@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from .decorators import admin_required
 import random, string
+import os
 # Create your views here.
 
 
@@ -36,7 +37,12 @@ def sign_in(requests):
             messages.success(requests,"Login Success")
             # requests.session['username'] = username
             login(requests,auth_user)
-            return redirect('user_homepage')
+
+            if requests.user.is_staff:
+                  return redirect("admin_dashboard")
+            else:
+
+                  return redirect('user_homepage')
             # TODO
         else:
             messages.error(requests,"Incorrect Credentials")
@@ -48,6 +54,12 @@ def log_out(requests):
     #url: /logout
     logout(requests)
     return redirect('homepage')
+
+def request_user_register(requests):
+
+
+      pass
+
 
 
 
@@ -82,14 +94,47 @@ def support(requests):
       pass
 @login_required(login_url='/login')
 def user_profile(requests):
-      #url: /usr/profile/<id>
-      #TODO
+      user = requests.user
+      return render(requests,"ums/user/user_profile.html",context={'user':user})
+      
+
       pass
 @login_required(login_url='/login')
 def edit_profile(requests):
     #url: /usr/profile/edt/<id>
-    #TODO
-    pass
+      user = requests.user
+      # print(user)
+      # print(pk)
+      # register_form = User_Update_Form
+      # normal_form =Normal_User_Update_Form
+
+      print(user.normal_user.phone)
+      
+      if requests.POST:
+                  
+            update_user_form = User_Update_Form(data=requests.POST, instance=user)
+            update_normal_form = Normal_User_Update_Form(requests.POST, requests.FILES ,instance=user.normal_user)
+
+            if update_normal_form.is_valid() and update_normal_form.is_valid():
+                  updated_user = update_user_form.save()
+                  normal_user = update_normal_form.save(commit=False)
+                  normal_user.user= updated_user
+                  normal_user.save()
+
+                  return redirect("all_users")
+
+      else:
+            update_user_form = User_Update_Form(instance=user)
+            update_normal_form = Normal_User_Update_Form(instance=user.normal_user)
+            
+
+      context = {
+            'update_normal_form':update_normal_form,
+            'update_register_form':update_user_form
+      }
+
+      return render(requests,"ums/user/edit_profile.html",context)
+
 
 
 
@@ -148,8 +193,8 @@ def new_user(requests):
 @login_required(login_url='/login')
 def edit_user(requests,pk):
       user = User.objects.get(pk = pk)
-      print(user)
-      print(pk)
+      # print(user)
+      # print(pk)
       # register_form = User_Update_Form
       # normal_form =Normal_User_Update_Form
 
@@ -187,15 +232,25 @@ def reset_password(request,pk):
       if user:
             user.set_password(new_password)
             user.save()
-
-            send_mail(
-            'Password Reset',
-            f'Your new Password for PDS is {new_password}',
-            'anilfyp@gmail.com',
-            [user.email],
-            fail_silently=False,)
+            try:
+                  send_mail(
+                  'Password Reset',
+                  f' Hi {user.first_name} <br> Your new Password for PDS is <srong>{new_password}</strong>',
+                  'anilfyp@gmail.com',
+                  [user.email],
+                  fail_silently=False,)
+            except:
+                  return HttpResponse("Email Could not be sent.")
 
       return redirect("all_users")
+
+def admin_profile(requests):
+      user = requests.user
+      return render(requests,"ums/admin/admin_profile.html",context={'user':user})
+
+
+      
+      
 
 
 
@@ -206,7 +261,7 @@ def reset_password(request,pk):
 
 @login_required(login_url='/login')
 def all_users(requests):
-      users = Normal_User.objects.all()
+      users = User.objects.all()
       # for user in users:
             # print(user__.profile_pic)
       return render(requests,"ums/admin/manage_users.html",{'users':users})
@@ -215,6 +270,10 @@ def all_users(requests):
 def delete_user(requests, pk):
       user = User.objects.get(pk=pk)
       print(pk)
+      try:
+            user.normal_user.profile_pic.delete()
+      except:
+            print("Admin")
       user.delete()
       return redirect('all_users')
       #url: /admin/usr/del/<id>
@@ -239,17 +298,31 @@ def toggle_block(requests,pk):
      
       print(user)
       if user.is_active:
-            user.update(is_active= False)
-            # user.save()
+            user.is_active = False
+            user.save()            # user.save()
             return redirect('all_users')
 
       else:
             user.is_active = True
             user.save()
             return redirect('all_users')
-      
-
       return redirect('all_users')
+
+def toggle_admin_role(requests,pk):
+      user = User.objects.get(pk=pk)
+
+      if user.is_staff:
+            user.is_staff = False
+            user.save()            # user.save()
+            return redirect('all_users')
+
+      else:
+            user.is_staff = True
+            user.save()
+            return redirect('all_users')
+      return redirect('all_users')
+
+      
 
 
 

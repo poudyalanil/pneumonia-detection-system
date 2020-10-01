@@ -37,20 +37,27 @@
                 <div class="sidebar-header">
                     <div class="user-pic">
 
+                        {%if request.user.normal_user.profile_pic%}
                         <img style="
                         height:50px; width:50px; border-radius:50%;
-                        " src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                        " src="{{request.user.normal_user.profile_pic.url}}"
                             alt="">
+                            {%else%}
+                            <img style="
+                            height:50px; width:50px; border-radius:50%;
+                            " src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                                alt="">
+                            {%endif%}
                     </div>
                     <div class="user-info">
-                        <strong> <span class="user-name">Jhon
-                                Smith</span></strong>
+                        <strong> <span class="user-name">
 
-                        <span class="user-role">Administrator</span>
-                        <span class="user-status">
-                            <i class="fa fa-circle"></i>
-                            <span>Online</span>
-                        </span>
+                            {{request.user.first_name}} {{request.user.last_name}}
+                            
+                            </span></strong>
+
+                        <span class="user-role">{{request.user.username}}</span>
+                       
                     </div>
                 </div>
 
@@ -61,7 +68,7 @@
                             <span>General</span>
                         </li>
                         <li class="sidebar">
-                            <a href="/usr/home/">
+                            <a href="/usr/home">
                                 <i class="fa fa-tachometer-alt"></i>
                                 <span id="dashboard-header">Dashboard</span>
 
@@ -69,7 +76,7 @@
 
                         </li>
                         <li class="sidebar">
-                            <a href="/usr/patients/">
+                            <a href="/usr/patients">
                                 <i class="fa fa-users"></i>
                                 <span id="user-header">Patients</span>
                             </a>
@@ -77,7 +84,7 @@
                         </li>
                        
                         <li class="sidebar">
-                            <a href="/usr/stats/">
+                            <a href="/usr/stats">
                                 <i class="fa fa-chart-line"></i>
                                 <span id="gallery-header">Stats</span>
                             </a>
@@ -85,48 +92,48 @@
                         </li>
 
                         <li class="sidebar">
-                            <a href="/usr/new/">
+                            <a href="/usr/new">
                                 <i class="fa fa-plus"></i>
                                 <span id="gallery-header">*New Test</span>
                             </a>
 
                         </li>
 
-
+<!-- 
                         <li class="header-menu">
                             <span id="extra-header">Extra</span>
                         </li>
                         <li>
-                            <a href="/usr/application/">
+                            <a href="/usr/application">
                                 <i class="fa fa-book"></i>
                                 <span id="application-header">Applications</span>
 
                             </a>
-                        </li>
+                        </li> 
                         <li>
-                            <a href="/usr/calendar/">
+                            <a href="/usr/calendar">
                                 <i class="fa fa-calendar"></i>
                                 <span id="calender-header">Calendar</span>
                             </a>
                         </li>
                         <li>
-                            <a href="/usr/notice/">
+                            <a href="/usr/notice">
                                 <i class="fa fa-question"></i>
                                 <span id="notice-header">Support</span>
                             </a>
                         </li>
-
+-->
                         <li class="header-menu">
                             <span id="extra-header">Settings</span>
                         </li>
                         <li>
-                            <a href="/usr/profile/">
+                            <a href="/usr/profile">
                                 <i class="fa fa-user"></i>
                                 <span id="notice-header">Profile</span>
                             </a>
                         </li>
                         <li>
-                            <a href="/usr/profile/">
+                            <a href="/logout">
                                 <i class="fa fa-power-off"></i>
                                 <span id="notice-header">Logout</span>
                             </a>
@@ -139,7 +146,7 @@
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
 
-                <a href="#">
+                <a href="/logout">
                     <i class="fa fa-power-off"></i>
                 </a>
             </div>
