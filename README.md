@@ -11,7 +11,6 @@ Features.
 
 # New Features!
 
-  - API
   - SMTP
 ### Tech
 
