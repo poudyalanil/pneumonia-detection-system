@@ -18,7 +18,7 @@ Dillinger uses a number of open source projects to work properly:
 
 * [Python](https://python.org/) 
 * [Google SMTP](https://google.com) 
-* [Djanogo](https://www.djangoproject.com/) 
+* [Django](https://www.djangoproject.com/) 
 * [Bootstrap](https://getbootstrap.com/) 
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
