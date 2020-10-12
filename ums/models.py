@@ -10,6 +10,7 @@ class Normal_User(models.Model):
     gender = models.CharField(max_length=20)
     country = models.CharField(max_length=20, default="Nepal")
     profile_pic= models.ImageField( null = True,blank =True)
+    is_request =models.BooleanField(blank=True,default=False)
 
 
 

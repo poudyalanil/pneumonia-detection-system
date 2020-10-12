@@ -189,35 +189,41 @@ def new_user(requests):
                   
       return render(requests,"ums/admin/new_user.html",context)
 
-# @login_required(login_url='/login')
-# def new_user(requests):
-#       if requests.POST:
-#             main_form  = Register_Form(requests.POST)
-#             normal_form = Normal_User_Form(requests.POST,requests.FILES)
+def request_new_user(requests):
+      if requests.POST:
+            main_form  = Register_Form(requests.POST)
+            normal_form = Normal_User_Form(requests.POST,requests.FILES)
 
-#             try:
-#                   user = User.objects.get(username= requests.POST['username'])
-#                   return HttpResponse("User already exists you moroon!!")
-#             except  User.DoesNotExist:
-#                   if main_form.is_valid() and normal_form.is_valid():
-#                         user = main_form.save()
-#                         normal_user = normal_form.save(commit=False)
-#                         normal_user.user= user
-#                         normal_user.save()
+            try:
+                  user = User.objects.get(username= requests.POST['username'])
+                  return HttpResponse("User already exists you moroon!!")
+            except  User.DoesNotExist:
+                  if main_form.is_valid() and normal_form.is_valid():
+                        user = main_form.save()
+                        normal_user = normal_form.save(commit=False)
+                        normal_user.user= user
+                        normal_user.is_request = True
+                        print("###################################")
+                        print("I am Here",user.email)
+                        user.is_active=False
+                        user.save()
+                        print("###################################")
+                        
+                        normal_user.save()
 
 
-#                         # username = main_form.cleaned_data.get('username')
-#                         # password = main_form.cleaned_data.get('password')
+                        # username = main_form.cleaned_data.get('username')
+                        # password = main_form.cleaned_data.get('password')
 
-#                         # user = authenticate(username=username,password=password)
-#                         # login(requests,user)
-#                         return redirect(new_user)
-#       else:
-#             main_form = Register_Form()
-#             normal_form = Normal_User_Form()
-#       context = {'main_form':main_form,'normal_form':normal_form}
+                        # user = authenticate(username=username,password=password)
+                        # login(requests,user)
+                        return redirect('/')
+      else:
+            main_form = Register_Form()
+            normal_form = Normal_User_Form()
+      context = {'main_form':main_form,'normal_form':normal_form}
                   
-#       return render(requests,"ums/admin/new_user.html",context)
+      return render(requests,"ums/request.html",context)
 
 
 @login_required(login_url='/login')
@@ -291,10 +297,20 @@ def admin_profile(requests):
 
 @login_required(login_url='/login')
 def all_users(requests):
-      users = User.objects.all()
+      active_users = User.objects.filter(is_active=True)
+      inactive_users = User.objects.filter(is_active=False)
+      # normal_users = Normal_User.objects.filter(is_request=True).count()
+      # print(normal_users)
+
+      
+
+
+
+      
+
       # for user in users:
             # print(user__.profile_pic)
-      return render(requests,"ums/admin/manage_users.html",{'users':users})
+      return render(requests,"ums/admin/manage_users.html",{'users':active_users,'in_users':inactive_users})
 
 @login_required(login_url='/login')
 def delete_user(requests, pk):
@@ -314,29 +330,48 @@ def toggle_admin(requests,pk):
       
       if user.is_staff:
             user.is_staff = False
-            user.save()
+            
       else:
             user.is_staff = True
-            user.save()
-
+      
+      
+      user.save()
 
 
 @login_required(login_url='/login')
 def toggle_block(requests,pk):
      
       user = User.objects.get(pk=pk)
+      n_user = user.normal_user
+      try:
+            n_user.is_request = False
+            n_user.save()
+      except:
+            print("Ramram")
+
+      
+      
      
-      print(user)
+     
+      
       if user.is_active:
             user.is_active = False
-            user.save()            # user.save()
+            user.save()
             return redirect('all_users')
 
       else:
             user.is_active = True
             user.save()
+            
+            message = f"Hi {user.username} your account is now active you can perfom all the activites to the system"
+            title = "Congratulations!! Your Account is now Active"
+            to = user.email
+            send_email(title,to,message)
             return redirect('all_users')
-      return redirect('all_users')
+
+      
+      # user.save()
+      # return redirect('all_users')
 
 def toggle_admin_role(requests,pk):
       user = User.objects.get(pk=pk)
@@ -352,7 +387,15 @@ def toggle_admin_role(requests,pk):
             return redirect('all_users')
       return redirect('all_users')
 
-      
+def send_email(title,to,message):
+     
+      send_mail(
+                  title,
+                  message,
+                  'anilfyp@gmail.com',
+                  [to],
+                  fail_silently=False,)
+
 
 
 

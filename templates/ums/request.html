@@ -1,0 +1,24 @@
+{%extends 'ums/base.html'%}
+{%block head%}
+{% load crispy_forms_tags %}
+
+
+
+<title>Sign In</title>
+{%endblock%}
+{%block content%}
+
+<div class="container">
+  <form method="POST" enctype="multipart/form-data">
+  
+  {%csrf_token%}
+  {{main_form |crispy}}
+  {{normal_form |crispy}}
+  
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  
+  
+  
+{%endblock%}
