@@ -91,7 +91,7 @@ def user_support(requests):
                   return redirect("user_support")
       else:
        context = {
-             'form':form,
+             'form':Issue_New_Ticket(),
              'tickets':User_Support_Ticket.objects.filter(user=requests.user.normal_user)
        }
 
@@ -232,15 +232,10 @@ def request_new_user(requests):
                         normal_user = normal_form.save(commit=False)
                         normal_user.user= user
                         normal_user.is_request = True
-                        print("###################################")
                         print("I am Here",user.email)
                         user.is_active=False
                         user.save()
-                        print("###################################")
-                        
                         normal_user.save()
-
-
                         # username = main_form.cleaned_data.get('username')
                         # password = main_form.cleaned_data.get('password')
 
