@@ -189,6 +189,36 @@ def new_user(requests):
                   
       return render(requests,"ums/admin/new_user.html",context)
 
+# @login_required(login_url='/login')
+# def new_user(requests):
+#       if requests.POST:
+#             main_form  = Register_Form(requests.POST)
+#             normal_form = Normal_User_Form(requests.POST,requests.FILES)
+
+#             try:
+#                   user = User.objects.get(username= requests.POST['username'])
+#                   return HttpResponse("User already exists you moroon!!")
+#             except  User.DoesNotExist:
+#                   if main_form.is_valid() and normal_form.is_valid():
+#                         user = main_form.save()
+#                         normal_user = normal_form.save(commit=False)
+#                         normal_user.user= user
+#                         normal_user.save()
+
+
+#                         # username = main_form.cleaned_data.get('username')
+#                         # password = main_form.cleaned_data.get('password')
+
+#                         # user = authenticate(username=username,password=password)
+#                         # login(requests,user)
+#                         return redirect(new_user)
+#       else:
+#             main_form = Register_Form()
+#             normal_form = Normal_User_Form()
+#       context = {'main_form':main_form,'normal_form':normal_form}
+                  
+#       return render(requests,"ums/admin/new_user.html",context)
+
 
 @login_required(login_url='/login')
 def edit_user(requests,pk):
