@@ -1,5 +1,5 @@
 from django import forms
-from ums.models import Normal_User
+from ums.models import Normal_User, User_Support_Ticket
 from django.contrib.auth.models import User
 
 
@@ -45,3 +45,8 @@ class Normal_User_Update_Form(forms.ModelForm):
     class Meta:
         model = Normal_User
         fields = ['phone', 'gender', 'country','profile_pic']
+
+class Issue_New_Ticket(forms.ModelForm):
+    class Meta:
+        model = User_Support_Ticket
+        fields = ['title','message']
