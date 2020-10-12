@@ -185,9 +185,6 @@ def admin_dashboard(requests):
 
       return render(requests,'ums/admin/admin_dashboard.html', context=context)
 
-def manage_support_tickets(requests):
-      pass
-
 @login_required(login_url='/login')
 def new_user(requests):
       if requests.POST:
