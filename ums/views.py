@@ -5,9 +5,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import  authenticate, logout, login
 from django.contrib import messages
-from .forms import Register_Form, Normal_User_Form, User_Update_Form,Normal_User_Update_Form
+from .forms import Register_Form, Normal_User_Form, User_Update_Form,Normal_User_Update_Form,Issue_New_Ticket
 from django.contrib.auth.models import User
-from .models import Normal_User
+from .models import Normal_User, User_Support_Ticket
+from datetime import datetime
 from django.core.mail import send_mail
 # from .decorators import login_required
 
@@ -71,6 +72,32 @@ def user_homepage(requests):
       #url: /usr/home
       #TODO
     return render(requests,'ums/user/user_dashboard.html')
+
+@login_required(login_url='/login')
+def user_support(requests):
+      form = Issue_New_Ticket(data=requests.POST)
+      current_user = requests.user.normal_user
+
+      if requests.POST:
+            if form.is_valid:
+                  main_form = form.save(commit=False)
+                  main_form.user = current_user
+                  main_form.save()
+                  title = "PDS Support | Your Ticket has been created"
+                  message = f"Hi {requests.user.first_name}, your ticket with title {form.cleaned_data.get('title')} has been issued at {datetime.now()}. We are looking into issue, we will contact you once the issue has been resloved"
+                  to = requests.user.email
+                  send_email(title,to,message)
+
+                  return redirect("user_support")
+      else:
+       context = {
+             'form':form,
+             'tickets':User_Support_Ticket.objects.filter(user=requests.user.normal_user)
+       }
+
+      
+      return render(requests,'ums/user/support.html',context)
+
 
 @login_required(login_url='/login')
 def all_patients(requests):
@@ -158,6 +185,8 @@ def admin_dashboard(requests):
 
       return render(requests,'ums/admin/admin_dashboard.html', context=context)
 
+def manage_support_tickets(requests):
+      pass
 
 @login_required(login_url='/login')
 def new_user(requests):
