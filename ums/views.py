@@ -176,7 +176,7 @@ def new_user(requests):
                         normal_user.save()
 
 
-                        # username = main_form.cleaned_data.get('username')
+                        # username= main_form.cleaned_data.get('username')
                         # password = main_form.cleaned_data.get('password')
 
                         # user = authenticate(username=username,password=password)
