@@ -2,6 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
 .vscode/
+root/
 
 migrations/
 __pycache__/
@@ -149,3 +150,4 @@ dmypy.json
 .pytype/
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+settings.py
