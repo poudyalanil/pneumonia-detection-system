@@ -33,8 +33,14 @@
   <tbody>
     {%for ticket in tickets%}
     <tr>
-      <th scope="row">ram</th>
-
+      <td >{{ticket.user.user.username}}</td>
+      <td>{{ticket.title}}</td>
+      <td >{{ticket.message}}</td>
+      <td >
+        <a href="/usr/support/del/{{ticket.id}}">
+      <button  class="btn btn-danger">Close Issue</button>
+      </a>
+      </td>
     </tr>
     {%endfor%}
 

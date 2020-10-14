@@ -28,12 +28,16 @@
     </tr>
   </thead>
   <tbody>
-    {%for t in tickets%}
+    {%for ticket in tickets%}
     <tr>
    
-      <td>{{t.title}}</td>
-      <td>{{t.message}}</td>
-      <td>{{t.time}}</td>
+      <td>{{ticket.title}}</td>
+      <td>{{ticket.message}}</td>
+      <td>{{ticket.time}}</td>
+      <td >
+        <a href="/admin/mg-tickets/del/{{ticket.id}}">
+      <button  class="btn btn-danger">Close Issue</button>
+      </a>
     </tr>
     {%endfor%}
   </tbody>
