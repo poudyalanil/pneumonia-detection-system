@@ -185,9 +185,6 @@ def admin_dashboard(requests):
 
       return render(requests,'ums/admin/admin_dashboard.html', context=context)
 
-def manage_support_tickets(requests):
-      pass
-
 @login_required(login_url='/login')
 def new_user(requests):
       if requests.POST:
@@ -295,7 +292,7 @@ def reset_password(request,pk):
             try:
                   send_mail(
                   'Password Reset',
-                  f' Hi {user.first_name} <br> Your new Password for PDS is <srong>{new_password}</strong>',
+                  f' Hi {user.first_name} Your new Password for PDS is {new_password}',
                   'anilfyp@gmail.com',
                   [user.email],
                   fail_silently=False,)
@@ -308,14 +305,23 @@ def admin_profile(requests):
       user = requests.user
       return render(requests,"ums/admin/admin_profile.html",context={'user':user})
 
+def support_tickets(requests):
+      all_tickets = User_Support_Ticket.objects.all()
+      return render(requests,'ums/admin/support_tickets.html',{'tickets':all_tickets})
 
-      
-      
+def close_ticket(requests,pk):
+      ticket = User_Support_Ticket.objects.get(pk=pk)
+      ticket.delete()
+      send_email(message=f"Dear user your issue[{ticket.title}] has been closed",title=f"{ticket.title} has been closed",to=ticket.user.user.email)
 
+      return redirect('support_tickets')
 
+def close_ticket_user(requests,pk):
+      ticket = User_Support_Ticket.objects.get(pk=pk)
+      ticket.delete()
+      send_email(message=f"Dear user your issue[{ticket.title}] has been closed",title=f"{ticket.title} has been closed",to=ticket.user.user.email)
 
-
-
+      return redirect('support_tickets')
 
 
 

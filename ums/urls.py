@@ -1,4 +1,4 @@
-from ums.views import admin_dashboard
+from ums.views import admin_dashboard, close_ticket
 from django.urls import path
 from . import views
 
@@ -16,6 +16,8 @@ urlpatterns = [
     path('usr/profile',views.user_profile,name='user_profile'),
     path('usr/profile/edit',views.edit_profile,name='edit_profile'),
     path('usr/support',views.user_support,name='user_support'),
+    path('usr/support/del/<int:pk>',views.close_ticket_user,name = "close_ticket_user"),
+
 
 
 
@@ -28,6 +30,8 @@ urlpatterns = [
     path('admin/usr/reset/<int:pk>',views.reset_password,name='reset_password'),
     path('admin/profile',views.admin_profile,name='admin_profile'),
     path('admin/usr/make-admin/<int:pk>',views.toggle_admin_role,name='toggle_admin_role'),
+    path('admin/mg-tickets',views.support_tickets,name='support_tickets'),
+    path('admin/mg-tickets/del/<int:pk>',views.close_ticket,name = "close_ticket"),
     # path('admin/profile/edit',views.edit_admin,name='edit_admin'),
 ]
 

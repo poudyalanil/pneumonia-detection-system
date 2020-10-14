@@ -1,46 +1,52 @@
-{%extends 'ums/user/user_base.html'%}
-{% load crispy_forms_tags %}
+{%extends 'ums/admin/admin_base.html'%}
 {%block head%}
-<title>User|Support</title>
+<title>Admin| Dashboard</title>
+
+<style>
+
+    .card{
+        background-image: url(https://i.imgur.com/kgDsRym.jpg);
+        background-repeat:no-repeat;
+        background-size:cover;
+        /* filter: blur(5px); */
+    }
+    
+</style>
 
 {%endblock%}
+
 {%block content%}
+
 <div class="container">
 
-  <form method="POST" enctype="multipart/form-data">
-    {{form|crispy}}
-{%csrf_token%}
-
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
-<br>
-<hr>
-<br>
 <table class="table">
   <thead class="thead-dark">
     <tr>
-     
+      <th scope="col">Issuer</th>
       <th scope="col">Title</th>
       <th scope="col">Description</th>
-      <th scope="col">Date</th>
       <th scope="col">Action</th>
+     
 
     </tr>
   </thead>
   <tbody>
     {%for ticket in tickets%}
     <tr>
-   
+      <td >{{ticket.user.user.username}}</td>
       <td>{{ticket.title}}</td>
-      <td>{{ticket.message}}</td>
-      <td>{{ticket.time}}</td>
+      <td >{{ticket.message}}</td>
       <td >
-        <a href="/admin/mg-tickets/del/{{ticket.id}}">
+        <a href="/usr/support/del/{{ticket.id}}">
       <button  class="btn btn-danger">Close Issue</button>
       </a>
+      </td>
     </tr>
     {%endfor%}
+
+
   </tbody>
+ 
 </table>
 </div>
 

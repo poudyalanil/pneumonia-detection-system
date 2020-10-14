@@ -404,7 +404,10 @@ button.bg-default:focus {
                   <i class="ni education_hat mr-2"></i>{{user.date_joined}}
                 </div>
                 <hr class="my-4">
-                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+               
+                  
+                   <p id = "quote">
+                  Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
                 <a href="/admin/usr/del/{{user.id}}"  style="color: red;" target="_blank">Delete Me</a>
               </div>
             </div>
@@ -413,4 +416,19 @@ button.bg-default:focus {
       </div>
     </div>
   </div>
+  <script>
+    quote = document.getElementById("quote")
+    fetch("https://type.fit/api/quotes")
+.then(function(response) {
+return response.json();
+})
+.then(function(data) {
+
+random_val = Math.floor(Math.random()*100)
+quote_data = data[random_val].text +'-<b>'+ data[random_val].author+'</b>'
+quote.textContent = quote_data;
+console.log(random_val)
+
+});
+    </script>
 {%endblock%}
