@@ -1,0 +1,50 @@
+{%extends 'ums/admin/admin_base.html'%}
+{%block head%}
+<title>Admin| Dashboard</title>
+
+<style>
+
+    .card{
+        background-image: url(https://i.imgur.com/kgDsRym.jpg);
+        background-repeat:no-repeat;
+        background-size:cover;
+        /* filter: blur(5px); */
+    }
+    
+</style>
+
+{%endblock%}
+
+{%block content%}
+
+<div class="container">
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Issuer</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+     
+
+    </tr>
+  </thead>
+  <tbody>
+    {%for ticket in tickets%}
+    <tr>
+      <th scope="row">ram</th>
+
+    </tr>
+    {%endfor%}
+
+
+  </tbody>
+ 
+</table>
+</div>
+
+
+
+
+{%endblock%}

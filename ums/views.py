@@ -305,13 +305,9 @@ def admin_profile(requests):
       user = requests.user
       return render(requests,"ums/admin/admin_profile.html",context={'user':user})
 
-
-      
-      
-
-
-
-
+def support_tickets(requests):
+      all_tickets = User_Support_Ticket.objects.all()
+      return render(requests,'ums/admin/support_tickets.html',{'ticket':all_tickets})
 
 
 

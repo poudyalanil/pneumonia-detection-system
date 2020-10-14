@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/usr/reset/<int:pk>',views.reset_password,name='reset_password'),
     path('admin/profile',views.admin_profile,name='admin_profile'),
     path('admin/usr/make-admin/<int:pk>',views.toggle_admin_role,name='toggle_admin_role'),
+    path('admin/mg-tickets',views.support_tickets,name='support_tickets')
     # path('admin/profile/edit',views.edit_admin,name='edit_admin'),
 ]
 

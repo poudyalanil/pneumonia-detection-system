@@ -20,10 +20,7 @@ class User_Support_Ticket(models.Model):
     user = models.ForeignKey(Normal_User,on_delete=models.CASCADE)
     title = models.CharField(max_length=250,null=True, blank=False)
     message = models.TextField()
-    time = datetime.now().strftime("%d %b, %Y - %I:%M %p")
-    # email = models.EmailField()
-    # phone = models.IntegerField()
-    
+    time = models.DateTimeField(default=datetime.now, blank=True)
     def __str__(self):
         return self.title
 
