@@ -7,214 +7,222 @@
 
 <a href="/admin/new-usr">
   <button class="btn btn-primary"> Add New User</button>
-  </a>
-  <hr>
-  <h3>Active Users</h3>
+
+</a>
+
+<br>
+
+<form class="justify-content-end" method="GET">
+  <input type="text" name="search_input" placeholder="Search user">
+</form>
+
+
+
+
+<hr>
+<h3>Active Users</h3>
 <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">User Image</th>
-        <th scope="col">Full Name</th>
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
-        <th scope="col">Status</th>
-        <th scope="col">Joined Date</th>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User Image</th>
+      <th scope="col">Full Name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+      <th scope="col">Joined Date</th>
 
-        <th scope="col">Phone Number</th>
-        <th scope="col">Action</th>
+      <th scope="col">Phone Number</th>
+      <th scope="col">Action</th>
 
-      </tr>
-    </thead>
-    <tbody>
-        {%for user in users%}
-        {%if not user.normal_user.is_request%}
-      <tr>
-        <th scope="row">
-        
+    </tr>
+  </thead>
+  <tbody>
+    {%for user in users%}
+    {%if not user.normal_user.is_request%}
+    <tr>
+      <th scope="row">
 
-          {%if user.normal_user.profile_pic%}
 
-          
+        {%if user.normal_user.profile_pic%}
 
-            <img 
-            style="border-radius: 50%;width:70px;"
-            src="/images/{{user.normal_user.profile_pic}}" alt="{{user.username}}" >
-          {%else%}
-          <img 
-          style="border-radius: 50%;width:70px;"
-          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}" >
 
-          {%endif%}
-          {%if user.is_staff%}
-          <span style="font-size: 20px;" class="badge badge-pill badge-info"><i class="fa fa-shield" aria-hidden="true"></i></span>
-          {%endif%}
-        </th>
-        
 
-        <td>{{user.first_name}} {{user.last_name}}</td>
-        <td>{{user.username}}
-            <br>
-           
-        </td>
-        <td>{{user.email}}</td>
-        {%if user.is_active%}
-        <td><span class="badge badge-success">.</span>
-        </td>
+        <img style="border-radius: 50%;width:70px;" src="/images/{{user.normal_user.profile_pic}}"
+          alt="{{user.username}}">
         {%else%}
-        <td><span class="badge badge-danger">.</span>
-        </td>
+        <img style="border-radius: 50%;width:70px;"
+          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}">
+
         {%endif%}
-        
-        <td>{{user.date_joined}}</td>
-        <td>{{user.normal_user.phone}}</td>
-
-        <td>
-            <a href="/admin/usr/edit/{{user.id}}">
-<button class="btn btn-primary">Edit</button>
-</a>
-<a href="usr/block/{{user.id}}">
-{%if user.is_active%}
-<button class="btn btn-warning">Block</button>  
-
-{%else%}
-<button class="btn btn-success">Un Block</button>
-{%endif%}
-</a>
-<a href="usr/reset/{{user.id}}">
-  <button class="btn btn-success">Reset</button>
-  </a>
-  {%if not user.is_staff%}
-<a href="usr/del/{{user.id}}">
-<button class="btn btn-danger">Delete</button>
-</a>
-
-{%endif%}
+        {%if user.is_staff%}
+        <span style="font-size: 20px;" class="badge badge-pill badge-info"><i class="fa fa-shield"
+            aria-hidden="true"></i></span>
+        {%endif%}
+      </th>
 
 
-<a href="usr/make-admin/{{user.id}}">
-  {%if user.is_staff%}
-  <button class="btn btn-primary">User <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-  {%else%}
-  <button class="btn btn-primary">Admin <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+      <td>{{user.first_name}} {{user.last_name}}</td>
+      <td>{{user.username}}
+        <br>
 
-  {%endif%}
-  </a>
+      </td>
+      <td>{{user.email}}</td>
+      {%if user.is_active%}
+      <td><span class="badge badge-success">.</span>
+      </td>
+      {%else%}
+      <td><span class="badge badge-danger">.</span>
+      </td>
+      {%endif%}
 
+      <td>{{user.date_joined}}</td>
+      <td>{{user.normal_user.phone}}</td>
 
-        </td>
+      <td>
+        <a href="/admin/usr/edit/{{user.id}}">
+          <button class="btn btn-primary">Edit</button>
+        </a>
+        <a href="usr/block/{{user.id}}">
+          {%if user.is_active%}
+          <button class="btn btn-warning">Block</button>
 
-      </tr>
-      <tr>
-       {%endif%}
-      {%endfor%}    
-
-    </tbody>
-  </table>
-
-  <hr>
-
-  <!-- INACTIVE USERS -->
-
-  <h3>Inactive Users</h3>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">User Image</th>
-        <th scope="col">Full Name</th>
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
-        <th scope="col">Status</th>
-        <th scope="col">Joined Date</th>
-
-        <th scope="col">Phone Number</th>
-        <th scope="col">Action</th>
-
-      </tr>
-    </thead>
-    <tbody>
-        {%for user in in_users%}
-        {%if not user.normal_user.is_request%}
-      <tr>
-        <th scope="row">
-        
-
-          {%if user.normal_user.profile_pic%}
-
-          
-
-            <img 
-            style="border-radius: 50%;width:70px;"
-            src="/images/{{user.normal_user.profile_pic}}" alt="{{user.username}}" >
           {%else%}
-          <img 
-          style="border-radius: 50%;width:70px;"
-          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}" >
-
+          <button class="btn btn-success">Un Block</button>
           {%endif%}
-          {%if user.is_staff%}
-          <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
-          {%endif%}
-        </th>
-        
+        </a>
+        <a href="usr/reset/{{user.id}}">
+          <button class="btn btn-success">Reset</button>
+        </a>
+        {%if not user.is_staff%}
+        <a href="usr/del/{{user.id}}">
+          <button class="btn btn-danger">Delete</button>
+        </a>
 
-        <td>{{user.first_name}} {{user.last_name}}</td>
-        <td>{{user.username}}
-            <br>
-           
-        </td>
-        <td>{{user.email}}</td>
-        {%if user.is_active%}
-        <td><span class="badge badge-success">.</span>
-        </td>
-        {%else%}
-        <td><span class="badge badge-danger">.</span>
-        </td>
         {%endif%}
-        
-        <td>{{user.date_joined}}</td>
-        <td>{{user.normal_user.phone}}</td>
-
-        <td>
-            <a href="/admin/usr/edit/{{user.id}}">
-<button class="btn btn-primary">Edit</button>
-</a>
-<a href="usr/block/{{user.id}}">
-{%if user.is_active%}
-<button class="btn btn-warning">Block</button>  
-
-{%else%}
-<button class="btn btn-success">Un Block</button>
-{%endif%}
-</a>
-<a href="usr/reset/{{user.id}}">
-  <button class="btn btn-success">Reset</button>
-  </a>
-<a href="usr/del/{{user.id}}">
-<button class="btn btn-danger">Delete</button>
-</a>
 
 
-<a href="usr/make-admin/{{user.id}}">
-  {%if user.is_staff%}
-  <button class="btn btn-primary">User <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-  {%else%}
-  <button class="btn btn-primary">Admin <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+        <a href="usr/make-admin/{{user.id}}">
+          {%if user.is_staff%}
+          <button class="btn btn-primary">User <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+          {%else%}
+          <button class="btn btn-primary">Admin <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 
-  {%endif%}
-  </a>
+          {%endif%}
+        </a>
 
 
-        </td>
+      </td>
 
-      </tr>
-      <tr>
-       {%endif%}
-      {%endfor%}    
+    </tr>
+    <tr>
+      {%endif%}
+      {%endfor%}
 
-    </tbody>
-  </table>  
+  </tbody>
+</table>
 
-  
+<hr>
+
+<!-- INACTIVE USERS -->
+
+<h3>Inactive Users</h3>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User Image</th>
+      <th scope="col">Full Name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+      <th scope="col">Joined Date</th>
+
+      <th scope="col">Phone Number</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {%for user in in_users%}
+    {%if not user.normal_user.is_request%}
+    <tr>
+      <th scope="row">
+
+
+        {%if user.normal_user.profile_pic%}
+
+
+
+        <img style="border-radius: 50%;width:70px;" src="/images/{{user.normal_user.profile_pic}}"
+          alt="{{user.username}}">
+        {%else%}
+        <img style="border-radius: 50%;width:70px;"
+          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}">
+
+        {%endif%}
+        {%if user.is_staff%}
+        <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
+        {%endif%}
+      </th>
+
+
+      <td>{{user.first_name}} {{user.last_name}}</td>
+      <td>{{user.username}}
+        <br>
+
+      </td>
+      <td>{{user.email}}</td>
+      {%if user.is_active%}
+      <td><span class="badge badge-success">.</span>
+      </td>
+      {%else%}
+      <td><span class="badge badge-danger">.</span>
+      </td>
+      {%endif%}
+
+      <td>{{user.date_joined}}</td>
+      <td>{{user.normal_user.phone}}</td>
+
+      <td>
+        <a href="/admin/usr/edit/{{user.id}}">
+          <button class="btn btn-primary">Edit</button>
+        </a>
+        <a href="usr/block/{{user.id}}">
+          {%if user.is_active%}
+          <button class="btn btn-warning">Block</button>
+
+          {%else%}
+          <button class="btn btn-success">Un Block</button>
+          {%endif%}
+        </a>
+        <a href="usr/reset/{{user.id}}">
+          <button class="btn btn-success">Reset</button>
+        </a>
+        <a href="usr/del/{{user.id}}">
+          <button class="btn btn-danger">Delete</button>
+        </a>
+
+
+        <a href="usr/make-admin/{{user.id}}">
+          {%if user.is_staff%}
+          <button class="btn btn-primary">User <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+          {%else%}
+          <button class="btn btn-primary">Admin <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+
+          {%endif%}
+        </a>
+
+
+      </td>
+
+    </tr>
+    <tr>
+      {%endif%}
+      {%endfor%}
+
+  </tbody>
+</table>
+
+
 
 
 <!-- New User Request  -->
@@ -236,35 +244,33 @@
     </tr>
   </thead>
   <tbody>
-      {%for user in in_users%}
-      {%if user.normal_user.is_request%}
+    {%for user in in_users%}
+    {%if user.normal_user.is_request%}
     <tr>
       <th scope="row">
-      
+
 
         {%if user.normal_user.profile_pic%}
 
-        
 
-          <img 
-          style="border-radius: 50%;width:70px;"
-          src="/images/{{user.normal_user.profile_pic}}" alt="{{user.username}}" >
+
+        <img style="border-radius: 50%;width:70px;" src="/images/{{user.normal_user.profile_pic}}"
+          alt="{{user.username}}">
         {%else%}
-        <img 
-        style="border-radius: 50%;width:70px;"
-        src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}" >
+        <img style="border-radius: 50%;width:70px;"
+          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}">
 
         {%endif%}
         {%if user.is_staff%}
         <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
         {%endif%}
       </th>
-      
+
 
       <td>{{user.first_name}} {{user.last_name}}</td>
       <td>{{user.username}}
-          <br>
-         
+        <br>
+
       </td>
       <td>{{user.email}}</td>
       {%if user.is_active%}
@@ -274,22 +280,22 @@
       <td><span class="badge badge-danger">.</span>
       </td>
       {%endif%}
-      
+
       <td>{{user.date_joined}}</td>
       <td>{{user.normal_user.phone}}</td>
 
       <td>
-         
-<a href="usr/block/{{user.id}}">
-{%if not user.is_active%}
 
-<button class="btn btn-success">Accept</button>
-{%endif%}
-</a>
+        <a href="usr/block/{{user.id}}">
+          {%if not user.is_active%}
 
-<a href="usr/del/{{user.id}}">
-<button class="btn btn-danger">Deny</button>
-</a>
+          <button class="btn btn-success">Accept</button>
+          {%endif%}
+        </a>
+
+        <a href="usr/del/{{user.id}}">
+          <button class="btn btn-danger">Deny</button>
+        </a>
 
 
 
@@ -299,11 +305,11 @@
 
     </tr>
     <tr>
-     {%endif%}
-    {%endfor%}    
+      {%endif%}
+      {%endfor%}
 
   </tbody>
-</table>  
+</table>
 
 
 
