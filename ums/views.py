@@ -66,18 +66,13 @@ def request_user_register(requests):
 ######################
 ##### user side   ####
 ######################
-@login_required(login_url='/login')
-def user_homepage(requests):
-    # url: /usr/home
-    # TODO
-    return render(requests, 'ums/user/user_dashboard.html')
 
 
 @login_required(login_url='/login')
 def user_support(requests):
     form = Issue_New_Ticket(data=requests.POST)
     current_user = requests.user.normal_user
-
+    context = {}
     if requests.POST:
         if form.is_valid:
             main_form = form.save(commit=False)
@@ -96,27 +91,6 @@ def user_support(requests):
         }
 
     return render(requests, 'ums/user/support.html', context)
-
-
-@login_required(login_url='/login')
-def all_patients(requests):
-    # url: /usr/patients/
-    # TODO
-    pass
-
-
-@login_required(login_url='/login')
-def new_test(requests):
-    # url: /usr/new/
-    # TODO
-    pass
-
-
-@login_required(login_url='/login')
-def stats(requests):
-    # url: /usr/stats/
-    # TODO
-    pass
 
 
 @login_required(login_url='/login')
