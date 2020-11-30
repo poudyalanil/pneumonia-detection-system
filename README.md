@@ -15,7 +15,6 @@ Features.
   - User Support
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
 
 * [Python](https://python.org/) 
 * [Google SMTP](https://google.com) 
