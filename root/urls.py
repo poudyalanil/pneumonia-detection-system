@@ -23,6 +23,7 @@ urlpatterns = [
     path('adminmgmt/', admin.site.urls),
     path('', include('ums.urls')),
     path('', include('ims.urls')),
+    path('', include('diagnose.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \

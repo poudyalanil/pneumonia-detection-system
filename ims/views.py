@@ -17,13 +17,6 @@ def all_patients(requests):
 
 
 @login_required(login_url='/login')
-def new_test(requests):
-    # url: /usr/new/
-    # TODO
-    pass
-
-
-@login_required(login_url='/login')
 def stats(requests):
     # url: /usr/stats/
     # TODO

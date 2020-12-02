@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'ums',
     'crispy_forms',
     'ims',
+    'diagnose',
 ]
 
 MIDDLEWARE = [
