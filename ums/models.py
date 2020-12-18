@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from cloudinary.models import CloudinaryField
 
 
 class Normal_User(models.Model):
@@ -25,7 +26,7 @@ class Normal_User(models.Model):
 
     country = models.CharField(
         max_length=20, choices=COUNTRY_CHOICES, default='1')
-    profile_pic = models.ImageField(null=True, blank=True)
+    profile_pic = CloudinaryField(null=True, blank=True)
     is_request = models.BooleanField(blank=True, default=False)
 
     def __str__(self):

@@ -1,82 +1,91 @@
-
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-  
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/CSS/admin_style.css">
-    
-    {%block head%}
-    {%endblock%}
-  </head>
-  <body>
-		
-		<div class="wrapper d-flex align-items-stretch">
-			<nav id="sidebar">
-				<div class="custom-menu">
-					<button type="button" id="sidebarCollapse" class="btn btn-primary">
-	        </button>
-        </div>
-	  		<div class="img bg-wrap text-center py-4" style="background-image: url(https://picsum.photos/200/300);">
-	  			<div class="user-logo">
+<head>
 
-            {%if request.user.normal_user.profile_pic%}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <div class="img" style="background-image:url('/images/{{user.normal_user.profile_pic}}')"></div>
-            {%else%}
-            <div class="img" style="background-image: url(
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/CSS/admin_style.css">
+
+  {%block head%}
+  {%endblock%}
+</head>
+
+<body>
+
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        </button>
+      </div>
+      <div class="img bg-wrap text-center py-4" style="background-image: url(https://picsum.photos/200/300);">
+        <div class="user-logo">
+
+          {%if request.user.normal_user.profile_pic%}
+
+          <div class="img" style="background-image:url('{{user.normal_user.profile_pic.url}}')"></div>
+          {%else%}
+          <div class="img" style="background-image: url(
               https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY);"></div>
-            {%endif%}
+          {%endif%}
 
-          
-	  				<h3>
 
-              {{request.user.first_name}} {{request.user.last_name}}
-            </h3>
-	  			</div>
-	  		</div>
-        <ul class="list-unstyled components mb-5">
-          <li>
-            <a href="/admin"><span class="fa fa-home mr-3"></span> Home</a>
-          </li>
-          <li>
-              <a href="/admin/mg-tickets"><span class="fa fa-comments mr-3 notif"><small class="d-flex align-items-center justify-content-center">5</small></span> Support Message</a>
-          </li>
-          <li>
-            <a href="/admin/mg-usr"><span class="fa fa-users mr-3"></span> Users</a>
-          </li>
-          <li>
-            <a href="/admin/profile"><span class="fa fa-user mr-3"></span> Profile</a>
-          </li>
-         
-          
-          
-          <li>
-            <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
-          </li>
-        </ul>
+          <h3>
 
-    	</nav>
+            {{request.user.first_name}} {{request.user.last_name}}
+          </h3>
+        </div>
+      </div>
+      <ul class="list-unstyled components mb-5">
+        <li>
+          <a href="/admin"><span class="fa fa-home mr-3"></span> Home</a>
+        </li>
+        <li>
+          <a href="/admin/mg-tickets"><span class="fa fa-comments mr-3 notif"><small
+                class="d-flex align-items-center justify-content-center">5</small></span> Support Message</a>
+        </li>
+        <li>
+          <a href="/admin/mg-usr"><span class="fa fa-users mr-3"></span> Users</a>
+        </li>
+        <li>
+          <a href="/admin/profile"><span class="fa fa-user mr-3"></span> Profile</a>
+        </li>
 
-        <!-- Page Content  -->
-      <div id="content" class="p-4 p-md-5 pt-5">
+
+
+        <li>
+          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+        </li>
+      </ul>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
       {%block content%}
       {%endblock%}
-      
-      </div>
-		</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  
-   
-    <script src='{% static "/js/main.js"%}'></script>
-  </body>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+
+
+  <script src='{% static "/js/main.js"%}'></script>
+</body>
+
 </html>

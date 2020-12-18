@@ -3,432 +3,429 @@
 <title>Profile|Admin</title>
 
 <style>
- .card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  border: 1px solid rgba(0, 0, 0, .05);
-  border-radius: .375rem;
-  background-color: #fff;
-  background-clip: border-box;
-}
-
-.card>hr {
-  margin-right: 0;
-  margin-left: 0;
-}
-
-.card-body {
-  padding: 1.5rem;
-  flex: 1 1 auto;
-}
-
-.card-header {
-  margin-bottom: 0;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, .05);
-  background-color: #fff;
-}
-
-.card-header:first-child {
-  border-radius: calc(.375rem - 1px) calc(.375rem - 1px) 0 0;
-}
-
-@keyframes progress-bar-stripes {
-  from {
-    background-position: 1rem 0;
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    border: 1px solid rgba(0, 0, 0, .05);
+    border-radius: .375rem;
+    background-color: #fff;
+    background-clip: border-box;
   }
 
-  to {
-    background-position: 0 0;
+  .card>hr {
+    margin-right: 0;
+    margin-left: 0;
   }
-}
 
-.bg-default {
-  background-color: #172b4d !important;
-}
+  .card-body {
+    padding: 1.5rem;
+    flex: 1 1 auto;
+  }
 
-a.bg-default:hover,
-a.bg-default:focus,
-button.bg-default:hover,
-button.bg-default:focus {
-  background-color: #0b1526 !important;
-}
+  .card-header {
+    margin-bottom: 0;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+    background-color: #fff;
+  }
 
-.border-0 {
-  border: 0 !important;
-}
+  .card-header:first-child {
+    border-radius: calc(.375rem - 1px) calc(.375rem - 1px) 0 0;
+  }
 
-.rounded-circle {
-  border-radius: 50% !important;
-}
+  @keyframes progress-bar-stripes {
+    from {
+      background-position: 1rem 0;
+    }
 
-.d-flex {
-  display: flex !important;
-}
+    to {
+      background-position: 0 0;
+    }
+  }
 
-.justify-content-center {
-  justify-content: center !important;
-}
+  .bg-default {
+    background-color: #172b4d !important;
+  }
 
-.justify-content-between {
-  justify-content: space-between !important;
-}
+  a.bg-default:hover,
+  a.bg-default:focus,
+  button.bg-default:hover,
+  button.bg-default:focus {
+    background-color: #0b1526 !important;
+  }
 
-.align-items-center {
-  align-items: center !important;
-}
+  .border-0 {
+    border: 0 !important;
+  }
 
-@media (min-width: 1200px) {
-  .justify-content-xl-between {
+  .rounded-circle {
+    border-radius: 50% !important;
+  }
+
+  .d-flex {
+    display: flex !important;
+  }
+
+  .justify-content-center {
+    justify-content: center !important;
+  }
+
+  .justify-content-between {
     justify-content: space-between !important;
   }
-}
 
-.float-right {
-  float: right !important;
-}
-
-.shadow,
-.card-profile-image img {
-  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, .15) !important;
-}
-
-.mr-2 {
-  margin-right: .5rem !important;
-}
-
-.mt-4,
-.my-4 {
-  margin-top: 1.5rem !important;
-}
-
-.mr-4 {
-  margin-right: 1.5rem !important;
-}
-
-.my-4 {
-  margin-bottom: 1.5rem !important;
-}
-
-.mb-5 {
-  margin-bottom: 3rem !important;
-}
-
-.mt-7 {
-  margin-top: 6rem !important;
-}
-
-.pt-0 {
-  padding-top: 0 !important;
-}
-
-.pb-0 {
-  padding-bottom: 0 !important;
-}
-
-.pt-8 {
-  padding-top: 8rem !important;
-}
-
-.m-auto {
-  margin: auto !important;
-}
-
-@media (min-width: 768px) {
-  .mt-md-5 {
-    margin-top: 3rem !important;
+  .align-items-center {
+    align-items: center !important;
   }
 
-  .pt-md-4 {
-    padding-top: 1.5rem !important;
+  @media (min-width: 1200px) {
+    .justify-content-xl-between {
+      justify-content: space-between !important;
+    }
   }
 
-  .pb-md-4 {
-    padding-bottom: 1.5rem !important;
-  }
-}
-
-@media (min-width: 1200px) {
-  .mb-xl-0 {
-    margin-bottom: 0 !important;
-  }
-}
-
-.text-center {
-  text-align: center !important;
-}
-
-.font-weight-light {
-  font-weight: 300 !important;
-}
-
-@media print {
-
-  *,
-  *::before,
-  *::after {
-    box-shadow: none !important;
-    text-shadow: none !important;
+  .float-right {
+    float: right !important;
   }
 
-  a:not(.btn) {
-    text-decoration: underline;
+  .shadow,
+  .card-profile-image img {
+    box-shadow: 0 0 2rem 0 rgba(136, 152, 170, .15) !important;
   }
 
-  img {
-    page-break-inside: avoid;
+  .mr-2 {
+    margin-right: .5rem !important;
   }
 
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3;
+  .mt-4,
+  .my-4 {
+    margin-top: 1.5rem !important;
   }
 
-  h2,
-  h3 {
-    page-break-after: avoid;
+  .mr-4 {
+    margin-right: 1.5rem !important;
   }
 
-  @ page {
-    size: a3;
-  }
-}
-
-@keyframes floating-lg {
-  0% {
-    transform: translateY(0px);
+  .my-4 {
+    margin-bottom: 1.5rem !important;
   }
 
-  50% {
-    transform: translateY(15px);
+  .mb-5 {
+    margin-bottom: 3rem !important;
   }
 
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes floating {
-  0% {
-    transform: translateY(0px);
+  .mt-7 {
+    margin-top: 6rem !important;
   }
 
-  50% {
-    transform: translateY(10px);
+  .pt-0 {
+    padding-top: 0 !important;
   }
 
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes floating-sm {
-  0% {
-    transform: translateY(0px);
+  .pb-0 {
+    padding-bottom: 0 !important;
   }
 
-  50% {
-    transform: translateY(5px);
+  .pt-8 {
+    padding-top: 8rem !important;
   }
 
-  100% {
-    transform: translateY(0px);
+  .m-auto {
+    margin: auto !important;
   }
-}
 
-[class*='shadow'] {
-  transition: all .15s ease;
-}
+  @media (min-width: 768px) {
+    .mt-md-5 {
+      margin-top: 3rem !important;
+    }
 
-.font-weight-300 {
-  font-weight: 300 !important;
-}
+    .pt-md-4 {
+      padding-top: 1.5rem !important;
+    }
 
-.btn {
-  font-size: .875rem;
-  position: relative;
-  transition: all .15s ease;
-  letter-spacing: .025em;
-  text-transform: none;
-  will-change: transform;
-}
+    .pb-md-4 {
+      padding-bottom: 1.5rem !important;
+    }
+  }
 
-.btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
-}
+  @media (min-width: 1200px) {
+    .mb-xl-0 {
+      margin-bottom: 0 !important;
+    }
+  }
 
-.btn:not(:last-child) {
-  margin-right: .5rem;
-}
+  .text-center {
+    text-align: center !important;
+  }
 
-.btn i:not(:first-child) {
-  margin-left: .5rem;
-}
+  .font-weight-light {
+    font-weight: 300 !important;
+  }
 
-.btn i:not(:last-child) {
-  margin-right: .5rem;
-}
+  @media print {
 
-.btn-sm {
-  font-size: .75rem;
-}
+    *,
+    *::before,
+    *::after {
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
 
-[class*='btn-outline-'] {
-  border-width: 1px;
-}
+    a:not(.btn) {
+      text-decoration: underline;
+    }
 
-.card-profile-image {
-  position: relative;
-}
+    img {
+      page-break-inside: avoid;
+    }
 
-.card-profile-image img {
-  position: absolute;
-  left: 50%;
-  max-width: 180px;
-  transition: all .15s ease;
-  transform: translate(-50%, -30%);
-  border-radius: .375rem;
-}
+    p,
+    h2,
+    h3 {
+      orphans: 3;
+      widows: 3;
+    }
 
-.card-profile-image img:hover {
-  transform: translate(-50%, -33%);
-}
+    h2,
+    h3 {
+      page-break-after: avoid;
+    }
 
-.card-profile-stats {
-  padding: 1rem 0;
-}
+    @ page {
+      size: a3;
+    }
+  }
 
-.card-profile-stats>div {
-  margin-right: 1rem;
-  padding: .875rem;
-  text-align: center;
-}
+  @keyframes floating-lg {
+    0% {
+      transform: translateY(0px);
+    }
 
-.card-profile-stats>div:last-child {
-  margin-right: 0;
-}
+    50% {
+      transform: translateY(15px);
+    }
 
-.card-profile-stats>div .heading {
-  font-size: 1.1rem;
-  font-weight: bold;
-  display: block;
-}
+    100% {
+      transform: translateY(0px);
+    }
+  }
 
-.card-profile-stats>div .description {
-  font-size: .875rem;
-  color: #adb5bd;
-}
+  @keyframes floating {
+    0% {
+      transform: translateY(0px);
+    }
 
-.main-content {
-  position: relative;
-}
+    50% {
+      transform: translateY(10px);
+    }
+
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes floating-sm {
+    0% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(5px);
+    }
+
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  [class*='shadow'] {
+    transition: all .15s ease;
+  }
+
+  .font-weight-300 {
+    font-weight: 300 !important;
+  }
+
+  .btn {
+    font-size: .875rem;
+    position: relative;
+    transition: all .15s ease;
+    letter-spacing: .025em;
+    text-transform: none;
+    will-change: transform;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
+  }
+
+  .btn:not(:last-child) {
+    margin-right: .5rem;
+  }
+
+  .btn i:not(:first-child) {
+    margin-left: .5rem;
+  }
+
+  .btn i:not(:last-child) {
+    margin-right: .5rem;
+  }
+
+  .btn-sm {
+    font-size: .75rem;
+  }
+
+  [class*='btn-outline-'] {
+    border-width: 1px;
+  }
+
+  .card-profile-image {
+    position: relative;
+  }
+
+  .card-profile-image img {
+    position: absolute;
+    left: 50%;
+    max-width: 180px;
+    transition: all .15s ease;
+    transform: translate(-50%, -30%);
+    border-radius: .375rem;
+  }
+
+  .card-profile-image img:hover {
+    transform: translate(-50%, -33%);
+  }
+
+  .card-profile-stats {
+    padding: 1rem 0;
+  }
+
+  .card-profile-stats>div {
+    margin-right: 1rem;
+    padding: .875rem;
+    text-align: center;
+  }
+
+  .card-profile-stats>div:last-child {
+    margin-right: 0;
+  }
+
+  .card-profile-stats>div .heading {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: block;
+  }
+
+  .card-profile-stats>div .description {
+    font-size: .875rem;
+    color: #adb5bd;
+  }
+
+  .main-content {
+    position: relative;
+  }
 </style>
 {%endblock%}
 
 {%block content%}
 <div class="main-content">
-    <div class="container mt-7">
-      <!-- Table -->
-      
-      <div class="row" 
-      style="align-items: center;"
-      >
-        <div class="col-xl-8 m-auto order-xl-2 mb-5 mb-xl-0 align-self-center">
-          <div class="card card-profile shadow">
-            <div class="row justify-content-center">
-              <div class="col-lg-3 order-lg-2">
-                <div class="card-profile-image">
-                  <a href="#">
+  <div class="container mt-7">
+    <!-- Table -->
 
-                    {%if user.normal_user.profile_pic%}
-                    <img src="{{user.normal_user.profile_pic.url}}"
-                    style=" vertical-align: middle;
+    <div class="row" style="align-items: center;">
+      <div class="col-xl-8 m-auto order-xl-2 mb-5 mb-xl-0 align-self-center">
+        <div class="card card-profile shadow">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="#">
+
+                  {%if user.normal_user.profile_pic%}
+                  <img src="{{user.normal_user.profile_pic.url}}" style=" vertical-align: middle;
                     border-style: none;
                     width: 150px;
                     height: 150px;
                     
-                    "class="rounded-circle">
-                    {%else%}
-                    <img src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png"
-                    style=" vertical-align: middle;
+                    " class="rounded-circle">
+                  {%else%}
+                  <img src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" style=" vertical-align: middle;
                     border-style: none;
                     width: 150px;
                     height: 150px;
-                    "class="rounded-circle">
-                    {%endif%}
-                   
-                  </a>
-                </div>
+                    " class="rounded-circle">
+                  {%endif%}
+
+                </a>
               </div>
             </div>
-            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-              <div class="d-flex justify-content-between">
-                <a href="/admin/usr/edit/{{user.id}}" class="btn btn-sm btn-info mr-4">Edit</a>
-              </div>
+          </div>
+          <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+            <div class="d-flex justify-content-between">
+              <a href="/admin/usr/edit/{{user.id}}" class="btn btn-sm btn-info mr-4">Edit</a>
             </div>
-            <div class="card-body pt-0 pt-md-4">
-              <div class="row">
-                <div class="col">
-                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                    <div>
-                      <span class="heading">{{user.email}}</span>
-                    </div>
-                  
-                   
+          </div>
+          <div class="card-body pt-0 pt-md-4">
+            <div class="row">
+              <div class="col">
+                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  <div>
+                    <span class="heading">{{user.email}}</span>
                   </div>
-                </div>
-              </div>
-              <div class="text-center">
-                <h3>
-                  {{user.first_name}}  {{user.last_name}}
-                </h3>
-                <div class="h5 font-weight-300">
-                  <i class="ni location_pin mr-2"></i>
-                    {%if user.normal_user.country%}
-                    {{user.normal_user.country}}
-                    {%else%}
-                    Nepal
-                    {%endif%}
+
 
                 </div>
-                <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>{{user.username}}
-                </div>
-                <div>
-                  <i class="ni education_hat mr-2"></i>{{user.date_joined}}
-                </div>
-                <hr class="my-4">
-               
-                  
-                   <p id = "quote">
-                  Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
-                <a href="/admin/usr/del/{{user.id}}"  style="color: red;" target="_blank">Delete Me</a>
               </div>
+            </div>
+            <div class="text-center">
+              <h3>
+                {{user.first_name}} {{user.last_name}}
+              </h3>
+              <div class="h5 font-weight-300">
+                <i class="ni location_pin mr-2"></i>
+                {%if user.normal_user.country%}
+                {{user.normal_user.country}}
+                {%else%}
+                Nepal
+                {%endif%}
+
+              </div>
+              <div class="h5 mt-4">
+                <i class="ni business_briefcase-24 mr-2"></i>{{user.username}}
+              </div>
+              <div>
+                <i class="ni education_hat mr-2"></i>{{user.date_joined}}
+              </div>
+              <hr class="my-4">
+
+
+              <p id="quote">
+                Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all
+                of his own music.</p>
+              <a href="/admin/usr/del/{{user.id}}" style="color: red;" target="_blank">Delete Me</a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script>
-    quote = document.getElementById("quote")
-    fetch("https://type.fit/api/quotes")
-.then(function(response) {
-return response.json();
-})
-.then(function(data) {
+</div>
+<script>
+  quote = document.getElementById("quote")
+  fetch("https://type.fit/api/quotes")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
 
-random_val = Math.floor(Math.random()*100)
-quote_data = data[random_val].text +'-<b>'+ data[random_val].author+'</b>'
-quote.textContent = quote_data;
-console.log(random_val)
+      random_val = Math.floor(Math.random() * 100)
+      quote_data = data[random_val].text + '-<b>' + data[random_val].author + '</b>'
+      quote.textContent = quote_data;
+      console.log(random_val)
 
-});
-    </script>
+    });
+</script>
 {%endblock%}

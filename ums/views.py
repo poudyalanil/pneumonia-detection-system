@@ -17,6 +17,7 @@ from .decorators import admin_required
 import random
 import string
 import os
+import requests
 # Create your views here.
 
 
@@ -328,6 +329,7 @@ def close_ticket_user(requests, pk):
 def all_users(requests):
     active_users = User.objects.filter(is_active=True)
     inactive_users = User.objects.filter(is_active=False)
+    
     # normal_users = Normal_User.objects.filter(is_request=True).count()
     # print(normal_users)
 
@@ -409,9 +411,10 @@ def toggle_admin_role(requests, pk):
 
 def send_email(title, to, message):
 
-    send_mail(
-        title,
-        message,
-        'anilfyp@gmail.com',
-        [to],
-        fail_silently=False,)
+	return requests.post(
+		"https://api.eu.mailgun.net/v3/anilpoudyal.com.np/messages",
+		auth=("api", "04eebd0cbfea5e49916810d84ae1ad96-e5da0167-c4002268"),
+		data={"from": "fyp@anilpoudyal.com.np",
+			"to": [to],
+			"subject": title,
+			"text": message})
