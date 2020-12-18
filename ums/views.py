@@ -18,6 +18,7 @@ import random
 import string
 import os
 import requests
+from . import mail_template
 # Create your views here.
 
 
@@ -79,9 +80,9 @@ def user_support(requests):
             main_form = form.save(commit=False)
             main_form.user = current_user
             main_form.save()
-            title = "PDS Support | Your Ticket has been created"
-            message = f"Hi {requests.user.first_name}, your ticket with title {form.cleaned_data.get('title')} has been issued at {datetime.now()}. We are looking into issue, we will contact you once the issue has been resloved"
-            to = requests.user.email
+            title = f"PDS Support | {form.cleaned_data.get('title')}"
+            message = f'''Hi {requests.user.first_name},<br> your ticket with title<strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"> "{form.cleaned_data.get('title')}" </strong> has been issued at <strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">{datetime.now().strftime("%d %B, %Y")} </strong>. We are looking into issue, we will contact you once the issue has been resloved'''
+            to = [requests.user.email]
             send_email(title, to, message)
 
             return redirect("user_support")
@@ -219,7 +220,7 @@ def request_new_user(requests):
                 name = main_form.cleaned_data.get('first_name')
 
                 title = "PDS Support| User Request Received"
-                message = f"Hi, {name} your user request has been received. We will process the request as soon as possible"
+                message = f'''Hi,<strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"> {name}</strong><br> your user request has been received. We will process the request as soon as possible'''
 
                 send_email(to=to, title=title, message=message)
 
@@ -278,13 +279,13 @@ def reset_password(request, pk):
     if user:
         user.set_password(new_password)
         user.save()
+        message = f'''Hi, <strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">{user.first_name}</strong> your password for <strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">Pneumonia Detection System</strong> has been reset and your new password is
+        
+        <strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><u>{new_password}</u></strong> do not share this password with anyone. For further queries email <i>info@anilpoudyal.com.np</i>
+        
+        '''
         try:
-            send_mail(
-                'Password Reset',
-                f' Hi {user.first_name} Your new Password for PDS is {new_password}',
-                'anilfyp@gmail.com',
-                [user.email],
-                fail_silently=False,)
+            send_email(title="Password Reset",to=[user.email],message=message)
         except:
             return HttpResponse("Email Could not be sent.")
 
@@ -304,8 +305,8 @@ def support_tickets(requests):
 def close_ticket(requests, pk):
     ticket = User_Support_Ticket.objects.get(pk=pk)
     ticket.delete()
-    send_email(message=f"Dear user your issue[{ticket.title}] has been closed",
-               title=f"{ticket.title} has been closed", to=ticket.user.user.email)
+    send_email(message=f'''Dear user your issue['<strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">{ticket.title}></strong>'] has been closed''',
+               title=f"{ticket.title} has been closed | PDS Support", to=[ticket.user.user.email])
 
     return redirect('support_tickets')
 
@@ -411,10 +412,16 @@ def toggle_admin_role(requests, pk):
 
 def send_email(title, to, message):
 
-	return requests.post(
+    formatted_message = mail_template.email(title,message)
+
+    return requests.post(
 		"https://api.eu.mailgun.net/v3/anilpoudyal.com.np/messages",
 		auth=("api", "04eebd0cbfea5e49916810d84ae1ad96-e5da0167-c4002268"),
 		data={"from": "fyp@anilpoudyal.com.np",
-			"to": [to],
+			"to": to,
 			"subject": title,
-			"text": message})
+			"text": message,
+            'html':formatted_message,
+            })
+
+
