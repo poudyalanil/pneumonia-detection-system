@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 import django_heroku
 
+import cloudinary
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ims',
     'diagnose',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +156,9 @@ EMAIL_HOST_PASSWORD = 'itisstrongpassword'
 
 django_heroku.settings(locals())
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+cloudinary.config( 
+  cloud_name = "anilpoudyal", 
+  api_key = "189186639598883", 
+  api_secret = "C0E4gkwAitl1xpKIaXPB5-8P39s" 
+)

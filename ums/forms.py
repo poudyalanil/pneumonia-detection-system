@@ -1,6 +1,7 @@
 from django import forms
 from ums.models import Normal_User, User_Support_Ticket
 from django.contrib.auth.models import User
+# from cloudinary.forms import CloudinaryJsFileField
 
 
 class Register_Form(forms.ModelForm):

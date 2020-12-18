@@ -1,6 +1,19 @@
 {%extends 'ums/admin/admin_base.html'%}
 {%block head%}
 <title>Admin| Users</title>
+
+<style>
+  .user_image {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+</style>
 {%endblock%}
 
 {%block content%}
@@ -46,18 +59,19 @@
         {%if user.normal_user.profile_pic%}
 
 
+        <div class="user_image" style=" background-image:url('{{user.normal_user.profile_pic.url}}')">
 
-        <img style="border-radius: 50%;width:70px;" src="/images/{{user.normal_user.profile_pic}}"
-          alt="{{user.username}}">
+        </div>
         {%else%}
-        <img style="border-radius: 50%;width:70px;"
-          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}">
+        <div class="user_image"
+          style=" background-image:url('https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png')">
 
-        {%endif%}
-        {%if user.is_staff%}
-        <span style="font-size: 20px;" class="badge badge-pill badge-info"><i class="fa fa-shield"
-            aria-hidden="true"></i></span>
-        {%endif%}
+
+          {%endif%}
+          {%if user.is_staff%}
+          <span style="font-size: 20px;" class="badge badge-pill badge-info"><i class="fa fa-shield"
+              aria-hidden="true"></i></span>
+          {%endif%}
       </th>
 
 
@@ -124,7 +138,7 @@
 <hr>
 
 <!-- INACTIVE USERS -->
-
+{%if in_users%}
 <h3>Inactive Users</h3>
 <table class="table">
   <thead class="thead-dark">
@@ -152,16 +166,17 @@
 
 
 
-        <img style="border-radius: 50%;width:70px;" src="/images/{{user.normal_user.profile_pic}}"
-          alt="{{user.username}}">
-        {%else%}
-        <img style="border-radius: 50%;width:70px;"
-          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}">
+        <div class="user_image" style=" background-image:url('{{user.normal_user.profile_pic.url}}')">
 
-        {%endif%}
-        {%if user.is_staff%}
-        <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
-        {%endif%}
+        </div>
+        {%else%}
+        <div class="user_image"
+          style=" background-image:url('https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png')">
+
+          {%endif%}
+          {%if user.is_staff%}
+          <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
+          {%endif%}
       </th>
 
 
@@ -225,6 +240,7 @@
 
 
 
+
 <!-- New User Request  -->
 
 <h3>New Users Request</h3>
@@ -253,17 +269,17 @@
         {%if user.normal_user.profile_pic%}
 
 
+        <div class="user_image" style=" background-image:url('{{user.normal_user.profile_pic.url}}')">
 
-        <img style="border-radius: 50%;width:70px;" src="/images/{{user.normal_user.profile_pic}}"
-          alt="{{user.username}}">
+        </div>
         {%else%}
-        <img style="border-radius: 50%;width:70px;"
-          src="https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png" alt="{{user.username}}">
+        <div class="user_image"
+          style=" background-image:url('https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png')">
 
-        {%endif%}
-        {%if user.is_staff%}
-        <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
-        {%endif%}
+          {%endif%}
+          {%if user.is_staff%}
+          <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
+          {%endif%}
       </th>
 
 
@@ -310,7 +326,7 @@
 
   </tbody>
 </table>
-
+{%endif%}
 
 
 
