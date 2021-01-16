@@ -18,13 +18,16 @@ def new_test(request):
         if new_test_form.is_valid:
             new_test_form.save()
             x_ray_image = new_test_form.cleaned_data["x_ray_image"]
-            content = upload_image(x_ray_image).json()
             this_data = Diagnose.objects.last()
-            analysed_image = content['analysed_image']
-            affected_percentage = content['affected_percentage']
-            this_data.analysed_image = analysed_image
-            this_data.affected_percentage = affected_percentage
-            this_data.save()
+            try:
+                content = upload_image(x_ray_image).json()
+                analysed_image = content['analysed_image']
+                affected_percentage = content['affected_percentage']
+                this_data.analysed_image = analysed_image
+                this_data.affected_percentage = affected_percentage
+                this_data.save()
+            except:
+                this_data.delete()
 
             # print(response)
         return redirect("new_test")
@@ -46,5 +49,6 @@ def upload_image(image):
     image_file = {'file': image}
     response = requests.post(
         url=BASE_API_URL+"upload-image", files=image_file)
+  
 
     return response

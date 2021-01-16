@@ -32,7 +32,15 @@ def index(requests):
 
 def sign_in(requests):
     # url: /login
-    if requests.POST:
+
+    if requests.user.is_authenticated:
+        if requests.user.is_staff:
+                return redirect("admin_dashboard")
+        else:
+
+                return redirect('user_homepage')
+        
+    elif requests.POST:
         username = requests.POST['username']
         password = requests.POST['password']
         auth_user = authenticate(username=username, password=password)
@@ -328,15 +336,32 @@ def close_ticket_user(requests, pk):
 
 @login_required(login_url='/login')
 def all_users(requests):
-    active_users = User.objects.filter(is_active=True)
-    inactive_users = User.objects.filter(is_active=False)
-    
-    # normal_users = Normal_User.objects.filter(is_request=True).count()
-    # print(normal_users)
+    all_users = User.objects.all()
+    return render(requests, "ums/admin/manage_users.html", {'users': all_users,'title':"All Users"})
 
-    # for user in users:
-    # print(user__.profile_pic)
-    return render(requests, "ums/admin/manage_users.html", {'users': active_users, 'in_users': inactive_users})
+@login_required(login_url='/login')
+def active_users(requests):
+    active_users = User.objects.filter(is_active=True)
+    return render(requests, "ums/admin/manage_users.html", {'users': active_users,'title':"Active Users"})
+
+@login_required(login_url='/login')
+def inactive_users(requests):
+    inactive_users = User.objects.filter(is_active=False)
+    return render(requests, "ums/admin/manage_users.html", {'users': inactive_users,'title':"Inactive Users"})
+
+@login_required(login_url='/login')
+def view_request_users(requests):
+
+    request_users = Normal_User.objects.filter(is_request=True)
+    users_list =[n.user for n in request_users]
+    return render(requests, "ums/admin/manage_users.html", {'users': users_list,'title':"User Requests"})
+
+@login_required(login_url='/login')
+def search_user(requests):
+    query = requests.GET['query']
+    users = User.objects.filter(username__icontains=query)
+
+    return render(requests, "ums/admin/manage_users.html", {'users': users,'title':"Search Results"})
 
 
 @login_required(login_url='/login')

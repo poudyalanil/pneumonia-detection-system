@@ -6,4 +6,5 @@ class New_Test(forms.ModelForm):
     class Meta:
         model = Diagnose
         fields = ['patient_name', 'patient_country',
-                  'patient_city', 'x_ray_image']
+                  'patient_city', 'patient_phone','patient_email','x_ray_image',
+                  ]
