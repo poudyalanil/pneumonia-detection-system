@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from diagnose.models import Diagnose
 from datetime import datetime
 import random
+from django.http import HttpResponse
 
 
 @login_required(login_url='/login')
@@ -22,11 +23,23 @@ def user_homepage(requests):
 def all_patients(requests):
     all_patients = Diagnose.objects.all()
 
-    pass
-
+    return render(requests,'ims/patients.html',context={'patients':all_patients})
+    
+@login_required(login_url="/login")
+def single_patient(requests,pk):
+    patient_details = Diagnose.objects.get(pk=pk)
+    return render(requests,"ims/single_patient.html",context={"patient":patient_details})
 
 @login_required(login_url='/login')
 def stats(requests):
     # url: /usr/stats/
     # TODO
     pass
+
+def delete_patient_record(request,pk):
+    info = Diagnose.objects.get(pk=pk)
+    try:
+        info.delete()
+        return redirect("all_patients")
+    except:
+        print("Error Occured")

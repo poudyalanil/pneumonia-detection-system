@@ -22,6 +22,14 @@ urlpatterns = [
     path('admin/usr/del/<int:pk>', views.delete_user, name='delete_user'),
     path('admin/usr/edit/<int:pk>', views.edit_user, name='edit_user'),
     path('admin/mg-usr', views.all_users, name='all_users'),
+    path('admin/mg-usr/inactive', views.inactive_users, name='inactive_users'),
+    path('admin/mg-usr/active', views.active_users, name='active_users'),
+    path('admin/mg-usr/search', views.search_user, name='search_users'),
+
+
+    path('admin/mg-usr/user-request', views.view_request_users, name='view_request_users'),
+
+
     path('admin/usr/block/<int:pk>', views.toggle_block, name='toggle_block'),
     path('admin/usr/reset/<int:pk>', views.reset_password, name='reset_password'),
     path('admin/profile', views.admin_profile, name='admin_profile'),

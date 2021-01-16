@@ -1,8 +1,23 @@
 {%extends 'ums/admin/admin_base.html'%}
 {%block head%}
-<title>Admin| Users</title>
+  
+<title>{{title}}</title>
 
 <style>
+
+  ::placeholder {
+  color: black;
+  opacity: 0.5; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color: black;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+ color: black;
+}
+
   .user_image {
     display: inline-block;
     width: 80px;
@@ -13,27 +28,37 @@
     background-position: center center;
     background-size: cover;
   }
+  table{
+    height: 500px;
+  }
+  
 </style>
 {%endblock%}
 
 {%block content%}
 
 <a href="/admin/new-usr">
-  <button class="btn btn-primary"> Add New User</button>
-
+  <button class="btn btn-primary"> Add New User <i class="fa fa-user-plus"></i></button>
 </a>
 
+
 <br>
-
-<form class="justify-content-end" method="GET">
-  <input type="text" name="search_input" placeholder="Search user">
-</form>
-
-
-
-
+<center>
+  <form class="mx-2 my-auto d-inline w-100" method="GET" action="/admin/mg-usr/search">
+  {%csrf_token%}
+    <div class="input-group">
+      <input type="text" name="query" id="search" class="form-control" placeholder="Search User"  style="border:1px solid black" >
+      <span class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">Search User</button>
+      </span>
+    </div>
+  </form>
+</center>
+<br>
+<h2>{{title}}</h2>
 <hr>
-<h3>Active Users</h3>
+<div class="table-responsive" style="height: 70%; overflow: auto;">
+  {%if users%}
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -51,7 +76,7 @@
   </thead>
   <tbody>
     {%for user in users%}
-    {%if not user.normal_user.is_request%}
+   
     <tr>
       <th scope="row">
 
@@ -82,10 +107,30 @@
       </td>
       <td>{{user.email}}</td>
       {%if user.is_active%}
-      <td><span class="badge badge-success">.</span>
+      <td>
+        
+        
+     
+      <span style="
+      height: 15px;
+  width: 15px;
+  background-color: rgb(53, 204, 27);
+  border-radius: 50%;
+  display: inline-block;
+      ">
+
+      </span>
       </td>
       {%else%}
-      <td><span class="badge badge-danger">.</span>
+      <td><span style="
+            height: 15px;
+        width: 15px;
+        background-color: rgb(187, 24, 24);
+        border-radius: 50%;
+        display: inline-block;
+            ">
+      
+      </span>
       </td>
       {%endif%}
 
@@ -129,207 +174,31 @@
 
     </tr>
     <tr>
-      {%endif%}
+     
       {%endfor%}
 
   </tbody>
 </table>
-
-<hr>
-
-<!-- INACTIVE USERS -->
-{%if in_users%}
-<h3>Inactive Users</h3>
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">User Image</th>
-      <th scope="col">Full Name</th>
-      <th scope="col">Username</th>
-      <th scope="col">Email</th>
-      <th scope="col">Status</th>
-      <th scope="col">Joined Date</th>
-
-      <th scope="col">Phone Number</th>
-      <th scope="col">Action</th>
-
-    </tr>
-  </thead>
-  <tbody>
-    {%for user in in_users%}
-    {%if not user.normal_user.is_request%}
-    <tr>
-      <th scope="row">
-
-
-        {%if user.normal_user.profile_pic%}
-
-
-
-        <div class="user_image" style=" background-image:url('{{user.normal_user.profile_pic.url}}')">
-
-        </div>
-        {%else%}
-        <div class="user_image"
-          style=" background-image:url('https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png')">
-
-          {%endif%}
-          {%if user.is_staff%}
-          <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
-          {%endif%}
-      </th>
-
-
-      <td>{{user.first_name}} {{user.last_name}}</td>
-      <td>{{user.username}}
-        <br>
-
-      </td>
-      <td>{{user.email}}</td>
-      {%if user.is_active%}
-      <td><span class="badge badge-success">.</span>
-      </td>
-      {%else%}
-      <td><span class="badge badge-danger">.</span>
-      </td>
-      {%endif%}
-
-      <td>{{user.date_joined}}</td>
-      <td>{{user.normal_user.phone}}</td>
-
-      <td>
-        <a href="/admin/usr/edit/{{user.id}}">
-          <button class="btn btn-primary">Edit</button>
-        </a>
-        <a href="usr/block/{{user.id}}">
-          {%if user.is_active%}
-          <button class="btn btn-warning">Block</button>
-
-          {%else%}
-          <button class="btn btn-success">Un Block</button>
-          {%endif%}
-        </a>
-        <a href="usr/reset/{{user.id}}">
-          <button class="btn btn-success">Reset</button>
-        </a>
-        <a href="usr/del/{{user.id}}">
-          <button class="btn btn-danger">Delete</button>
-        </a>
-
-
-        <a href="usr/make-admin/{{user.id}}">
-          {%if user.is_staff%}
-          <button class="btn btn-primary">User <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-          {%else%}
-          <button class="btn btn-primary">Admin <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-
-          {%endif%}
-        </a>
-
-
-      </td>
-
-    </tr>
-    <tr>
-      {%endif%}
-      {%endfor%}
-
-  </tbody>
-</table>
-
-
-
-
-
-<!-- New User Request  -->
-
-<h3>New Users Request</h3>
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">User Image</th>
-      <th scope="col">Full Name</th>
-      <th scope="col">Username</th>
-      <th scope="col">Email</th>
-      <th scope="col">Status</th>
-      <th scope="col">Joined Date</th>
-
-      <th scope="col">Phone Number</th>
-      <th scope="col">Action</th>
-
-    </tr>
-  </thead>
-  <tbody>
-    {%for user in in_users%}
-    {%if user.normal_user.is_request%}
-    <tr>
-      <th scope="row">
-
-
-        {%if user.normal_user.profile_pic%}
-
-
-        <div class="user_image" style=" background-image:url('{{user.normal_user.profile_pic.url}}')">
-
-        </div>
-        {%else%}
-        <div class="user_image"
-          style=" background-image:url('https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png')">
-
-          {%endif%}
-          {%if user.is_staff%}
-          <span class="badge badge-pill badge-info"><i class="fa fa-check" aria-hidden="true"></i></span>
-          {%endif%}
-      </th>
-
-
-      <td>{{user.first_name}} {{user.last_name}}</td>
-      <td>{{user.username}}
-        <br>
-
-      </td>
-      <td>{{user.email}}</td>
-      {%if user.is_active%}
-      <td><span class="badge badge-success">.</span>
-      </td>
-      {%else%}
-      <td><span class="badge badge-danger">.</span>
-      </td>
-      {%endif%}
-
-      <td>{{user.date_joined}}</td>
-      <td>{{user.normal_user.phone}}</td>
-
-      <td>
-
-        <a href="usr/block/{{user.id}}">
-          {%if not user.is_active%}
-
-          <button class="btn btn-success">Accept</button>
-          {%endif%}
-        </a>
-
-        <a href="usr/del/{{user.id}}">
-          <button class="btn btn-danger">Deny</button>
-        </a>
-
-
-
-
-
-      </td>
-
-    </tr>
-    <tr>
-      {%endif%}
-      {%endfor%}
-
-  </tbody>
-</table>
+{%else%}
+<center>
+  <h5>Not Found</h5>
+</center>
 {%endif%}
+</div>
+<hr>
+<center>
+<a href="/admin/mg-usr">
+  <button class="btn btn-light shadow-lg"> View All Users <i class="fa fa-users"></i></button </a>
 
 
+<a href="/admin/mg-usr/user-request">
+  <button class="btn btn-light shadow-lg"> View User Request <i class="fa fa-plus"></i></button </a>
 
+<a href="/admin/mg-usr/active">
+  <button class="btn btn-light shadow-lg"> View Active Users <i class="fa fa-user-circle"></i></button </a>
 
+<a href="/admin/mg-usr/inactive">
+  <button class="btn btn-light shadow-lg"> View Inactive Users <i class="fa fa-user-times"></i></button </a>
+</center>
 
 {%endblock%}
