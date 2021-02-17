@@ -1,22 +1,24 @@
 {%extends 'ums/admin/admin_base.html'%}
 {%block head%}
-  
+
 <title>{{title}}</title>
 
 <style>
-
   ::placeholder {
-  color: black;
-  opacity: 0.5; /* Firefox */
-}
+    color: black;
+    opacity: 0.5;
+    /* Firefox */
+  }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
- color: black;
-}
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: black;
+  }
 
-::-ms-input-placeholder { /* Microsoft Edge */
- color: black;
-}
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: black;
+  }
 
   .user_image {
     display: inline-block;
@@ -28,10 +30,30 @@
     background-position: center center;
     background-size: cover;
   }
-  table{
-    height: 500px;
+
+  table {
+    height: 200px;
+    overflow: hidden;
+
   }
-  
+
+  .footer-navbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    background-color: #32373D;
+
+    padding: 20px;
+
+
+
+  }
+
+  .footer-navbar-item {
+    flex: 1;
+  }
 </style>
 {%endblock%}
 
@@ -45,9 +67,10 @@
 <br>
 <center>
   <form class="mx-2 my-auto d-inline w-100" method="GET" action="/admin/mg-usr/search">
-  {%csrf_token%}
+    {%csrf_token%}
     <div class="input-group">
-      <input type="text" name="query" id="search" class="form-control" placeholder="Search User"  style="border:1px solid black" >
+      <input type="text" name="query" id="search" class="form-control" placeholder="Search User"
+        style="border:1px solid black">
       <span class="input-group-append">
         <button class="btn btn-outline-secondary" type="submit">Search User</button>
       </span>
@@ -55,63 +78,64 @@
   </form>
 </center>
 <br>
-<h2>{{title}}</h2>
+{%if users%}
+<h2 id="request_title">{{title}}</h2>
 <hr>
-<div class="table-responsive" style="height: 70%; overflow: auto;">
-  {%if users%}
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">User Image</th>
-      <th scope="col">Full Name</th>
-      <th scope="col">Username</th>
-      <th scope="col">Email</th>
-      <th scope="col">Status</th>
-      <th scope="col">Joined Date</th>
+<div class="table-responsive" style="height: 70%; overflow-y: scroll;">
 
-      <th scope="col">Phone Number</th>
-      <th scope="col">Action</th>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">User Image</th>
+        <th scope="col">Full Name</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col">Joined Date</th>
 
-    </tr>
-  </thead>
-  <tbody>
-    {%for user in users%}
-   
-    <tr>
-      <th scope="row">
+        <th scope="col">Phone Number</th>
+        <th scope="col">Action</th>
 
+      </tr>
+    </thead>
+    <tbody>
+      {%for user in users%}
 
-        {%if user.normal_user.profile_pic%}
+      <tr>
+        <th scope="row">
 
 
-        <div class="user_image" style=" background-image:url('{{user.normal_user.profile_pic.url}}')">
-
-        </div>
-        {%else%}
-        <div class="user_image"
-          style=" background-image:url('https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png')">
+          {%if user.normal_user.profile_pic%}
 
 
-          {%endif%}
-          {%if user.is_staff%}
-          <span style="font-size: 20px;" class="badge badge-pill badge-info"><i class="fa fa-shield"
-              aria-hidden="true"></i></span>
-          {%endif%}
-      </th>
+          <div class="user_image" style=" background-image:url('{{user.normal_user.profile_pic.url}}')">
+
+          </div>
+          {%else%}
+          <div class="user_image"
+            style=" background-image:url('https://archtechproperties.com.ng/wp-content/uploads/2016/01/gravatar.png')">
 
 
-      <td>{{user.first_name}} {{user.last_name}}</td>
-      <td>{{user.username}}
-        <br>
+            {%endif%}
+            {%if user.is_staff%}
+            <span style="font-size: 20px;" class="badge badge-user badge-info"><i class="fa fa-shield"
+                aria-hidden="true"></i></span>
+            {%endif%}
+        </th>
 
-      </td>
-      <td>{{user.email}}</td>
-      {%if user.is_active%}
-      <td>
-        
-        
-     
-      <span style="
+
+        <td>{{user.first_name}} {{user.last_name}}</td>
+        <td>{{user.username}}
+          <br>
+
+        </td>
+        <td>{{user.email}}</td>
+        {%if user.is_active%}
+        <td>
+
+
+
+          <span style="
       height: 15px;
   width: 15px;
   background-color: rgb(53, 204, 27);
@@ -119,86 +143,110 @@
   display: inline-block;
       ">
 
-      </span>
-      </td>
-      {%else%}
-      <td><span style="
+          </span>
+        </td>
+        {%else%}
+        <td><span style="
             height: 15px;
         width: 15px;
         background-color: rgb(187, 24, 24);
         border-radius: 50%;
         display: inline-block;
             ">
-      
-      </span>
-      </td>
-      {%endif%}
 
-      <td>{{user.date_joined}}</td>
-      <td>{{user.normal_user.phone}}</td>
-
-      <td>
-        <a href="/admin/usr/edit/{{user.id}}">
-          <button class="btn btn-primary">Edit</button>
-        </a>
-        <a href="usr/block/{{user.id}}">
-          {%if user.is_active%}
-          <button class="btn btn-warning">Block</button>
-
-          {%else%}
-          <button class="btn btn-success">Un Block</button>
-          {%endif%}
-        </a>
-        <a href="usr/reset/{{user.id}}">
-          <button class="btn btn-success">Reset</button>
-        </a>
-        {%if not user.is_staff%}
-        <a href="usr/del/{{user.id}}">
-          <button class="btn btn-danger">Delete</button>
-        </a>
-
+          </span>
+        </td>
         {%endif%}
 
+        <td>{{user.date_joined}}</td>
+        <td>{{user.normal_user.phone}}</td>
 
-        <a href="usr/make-admin/{{user.id}}">
-          {%if user.is_staff%}
-          <button class="btn btn-primary">User <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+        <td>
+          <a href="/admin/usr/edit/{{user.id}}">
+            <button class="btn btn-primary">Edit</button>
+          </a>
+
+
+          {%if is_request%}
+          <a href="/admin/usr/block/{{user.id}}">
+            <button class="btn btn-success">Accept <i class="fa fa-check"></i></button>
+          </a>
+          <a href="/admin/usr/del/{{user.id}}">
+            <button class="btn btn-danger">Deny <i class="fa fa-close"></i></button>
+          </a>
+
           {%else%}
-          <button class="btn btn-primary">Admin <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+
+          <a href="/admin/usr/block/{{user.id}}">
+            {%if user.is_active%}
+            <button class="btn btn-warning">Block</button>
+
+            {%else%}
+            <button class="btn btn-success">Un Block</button>
+            {%endif%}
+
+
+          </a>
+
+          <a href="usr/reset/{{user.id}}">
+            <button class="btn btn-success">Reset</button>
+          </a>
+          {%if not user.is_staff%}
+          <a href="usr/del/{{user.id}}">
+            <button class="btn btn-danger">Delete</button>
+          </a>
 
           {%endif%}
-        </a>
 
 
-      </td>
+          <a href="usr/make-admin/{{user.id}}">
+            {%if user.is_staff%}
+            <button class="btn btn-primary">User <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            {%else%}
+            <button class="btn btn-primary">Admin <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 
-    </tr>
-    <tr>
-     
-      {%endfor%}
+            {%endif%}
+          </a>
+          {%endif%}
 
-  </tbody>
-</table>
-{%else%}
-<center>
-  <h5>Not Found</h5>
-</center>
-{%endif%}
+
+
+        </td>
+
+      </tr>
+      <tr>
+
+        {%endfor%}
+
+    </tbody>
+  </table>
+  {%else%}
+  <center>
+    <h3 style="color:rgba(255, 1, 1, 0.589)">No {{title}} Found !!</h3>
+    <script>
+      var title_obj = document.getElementById("request_title");
+      title_obj.display = "none";
+    </script>
+  </center>
+  </center>
+  {%endif%}
 </div>
-<hr>
-<center>
-<a href="/admin/mg-usr">
-  <button class="btn btn-light shadow-lg"> View All Users <i class="fa fa-users"></i></button </a>
+<div style="margin-top:30px"></div>
+
+<center class="footer-navbar">
+  <a class="footer-nav-item" href="/admin/mg-usr">
+    <button class="btn btn-light shadow-lg"> View All Users <i class="fa fa-users"></i></button </a>
 
 
-<a href="/admin/mg-usr/user-request">
-  <button class="btn btn-light shadow-lg"> View User Request <i class="fa fa-plus"></i></button </a>
+    <a class="footer-nav-item" href="/admin/mg-usr/user-request">
+      <button class="btn btn-light shadow-lg"> View User Request <i class="fa fa-plus"></i></button </a>
 
-<a href="/admin/mg-usr/active">
-  <button class="btn btn-light shadow-lg"> View Active Users <i class="fa fa-user-circle"></i></button </a>
+      <a class="footer-nav-item" href="/admin/mg-usr/active">
+        <button class="btn btn-light shadow-lg"> View Active Users <i class="fa fa-user-circle"></i></button </a>
 
-<a href="/admin/mg-usr/inactive">
-  <button class="btn btn-light shadow-lg"> View Inactive Users <i class="fa fa-user-times"></i></button </a>
+        <a class="footer-nav-item" href="/admin/mg-usr/inactive">
+          <button class="btn btn-light shadow-lg"> View Inactive Users <i class="fa fa-user-times"></i></button </a>
+          <hr>
 </center>
 
 {%endblock%}
