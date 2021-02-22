@@ -336,25 +336,37 @@ def close_ticket_user(requests, pk):
 
 @login_required(login_url='/login')
 def all_users(requests):
-    all_users = User.objects.all()
-    return render(requests, "ums/admin/manage_users.html", {'users': all_users,'title':"All Users"})
+    normal_user = Normal_User.objects.filter(is_request=False)
+    ur =[]
+    for usr in normal_user:
+        user_obj = usr.user
+        ur.append(user_obj)
+    return render(requests, "ums/admin/manage_users.html", {'users': ur,'title':"All Users",'is_request':False})
 
 @login_required(login_url='/login')
 def active_users(requests):
     active_users = User.objects.filter(is_active=True)
-    return render(requests, "ums/admin/manage_users.html", {'users': active_users,'title':"Active Users"})
+    return render(requests, "ums/admin/manage_users.html", {'users': active_users,'title':"Active Users",'is_request':False})
 
 @login_required(login_url='/login')
 def inactive_users(requests):
     inactive_users = User.objects.filter(is_active=False)
-    return render(requests, "ums/admin/manage_users.html", {'users': inactive_users,'title':"Inactive Users"})
+
+    normal_user = Normal_User.objects.filter(is_request=False)
+    ur =[]
+    for usr in normal_user:
+        if usr.user.is_active==False:
+            user_obj = usr.user
+            ur.append(user_obj)
+
+    return render(requests, "ums/admin/manage_users.html", {'users': ur,'title':"Inactive Users",'is_request':False})
 
 @login_required(login_url='/login')
 def view_request_users(requests):
 
     request_users = Normal_User.objects.filter(is_request=True)
     users_list =[n.user for n in request_users]
-    return render(requests, "ums/admin/manage_users.html", {'users': users_list,'title':"User Requests"})
+    return render(requests, "ums/admin/manage_users.html", {'users': users_list,'title':"User Requests",'is_request':True})
 
 @login_required(login_url='/login')
 def search_user(requests):
