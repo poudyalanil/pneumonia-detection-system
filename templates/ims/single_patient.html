@@ -135,7 +135,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                aria-controls="profile" aria-selected="false">Timeline</a>
+                                aria-controls="profile" aria-selected="false">Records</a>
                         </li>
                     </ul>
                 </div>
@@ -194,29 +194,58 @@
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Experience</label>
+                                <label>Date</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Expert</p>
+                                <p>{{patient.test_date}}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Hourly Rate</label>
+                                <label>Affected Percentage</label>
                             </div>
                             <div class="col-md-6">
-                                <p>10$/hr</p>
+                                <p>{{patient.affected_percentage}}%
+
+                                    {%if patient.affected_percentage > 50%}
+
+                                    <span style="
+                                            height: 15px;
+                                        width: 15px;
+                                        background-color: rgb(187, 24, 24);
+                                        border-radius: 50%;
+                                        display: inline-block;
+                                            ">
+
+                                        {%else%}
+
+                                        <span style="
+                                                                            height: 15px;
+                                                                        width: 15px;
+                                                                        background-color: rgb(112, 231, 15);
+                                                                        border-radius: 50%;
+                                                                        display: inline-block;
+                                                                            ">
+
+                                            {%endif%}
+
+                                </p>
+
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Total Projects</label>
+                                <label>X-Ray Image</label>
                             </div>
                             <div class="col-md-6">
-                                <p>230</p>
+                                <img src="https://cdn.mos.cms.futurecdn.net/VRv8ab66tAfezxvXdXVpfe-1200-80.jpg" style="
+                                width:150px;
+                                padding-bottom: 20px;
+                                " alt="" srcset="">
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-6">
                                 <label>English Level</label>
                             </div>
@@ -231,7 +260,7 @@
                             <div class="col-md-6">
                                 <p>6 months</p>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-md-12">
 

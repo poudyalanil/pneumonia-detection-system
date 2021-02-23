@@ -5,6 +5,8 @@ import requests
 from .forms import New_Test
 from django.views.decorators.csrf import csrf_exempt
 from diagnose.models import Diagnose
+import os
+import time
 
 
 BASE_API_URL = 'http://api.anilpoudyal.com.np/'
@@ -26,6 +28,8 @@ def new_test(request):
                 this_data.analysed_image = analysed_image
                 this_data.affected_percentage = affected_percentage
                 this_data.save()
+                return redirect("all_patients")
+
             except:
                 this_data.delete()
 
@@ -46,6 +50,7 @@ def check_api_call(base_url):
 
 
 def upload_image(image):
+    #TODO image files with space as names
     image_file = {'file': image}
     response = requests.post(
         url=BASE_API_URL+"upload-image", files=image_file)
