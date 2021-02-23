@@ -15,4 +15,4 @@ class Diagnose(models.Model):
     x_ray_image = models.ImageField(null=False, blank=False, verbose_name="X-Ray Image")
     # after analysing image the api hosts the image to imgur and sends back url of the image
     analysed_image = models.CharField(max_length=2083, default="")
-    affected_percentage = models.CharField(max_length=50)
+    affected_percentage = models.IntegerField(default=-1)

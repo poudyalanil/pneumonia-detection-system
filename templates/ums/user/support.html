@@ -1,25 +1,36 @@
 {%extends 'ums/user/user_base.html'%}
 {% load crispy_forms_tags %}
 {%block head%}
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
 <title>User|Support</title>
 
 {%endblock%}
 {%block content%}
 <div class="container">
 
+
   <form method="POST" enctype="multipart/form-data">
     {{form|crispy}}
-{%csrf_token%}
 
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+
+
+    {%csrf_token%}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</div>
 <br>
 <hr>
 <br>
 <table class="table">
   <thead class="thead-dark">
     <tr>
-     
+
       <th scope="col">Title</th>
       <th scope="col">Description</th>
       <th scope="col">Date</th>
@@ -30,21 +41,35 @@
   <tbody>
     {%for ticket in tickets%}
     <tr>
-   
+
       <td>{{ticket.title}}</td>
       <td>{{ticket.message}}</td>
       <td>{{ticket.time}}</td>
-      <td >
+      <td>
         <a href="/admin/mg-tickets/del/{{ticket.id}}">
-      <button  class="btn btn-danger">Close Issue</button>
-      </a>
+          <button class="btn btn-danger">Close Issue</button>
+        </a>
     </tr>
     {%endfor%}
   </tbody>
 </table>
 </div>
 
-
-
+<script>
+  $('#summernote').summernote({
+    placeholder: 'Hello stand alone ui',
+    tabsize: 2,
+    height: 120,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+  });
+</script>
 
 {%endblock%}

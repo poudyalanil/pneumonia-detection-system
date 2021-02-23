@@ -1,6 +1,10 @@
 from django import forms
 from ums.models import Normal_User, User_Support_Ticket
 from django.contrib.auth.models import User
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+
+
+
 # from cloudinary.forms import CloudinaryJsFileField
 
 
@@ -51,6 +55,7 @@ class Normal_User_Update_Form(forms.ModelForm):
 
 
 class Issue_New_Ticket(forms.ModelForm):
+    
     class Meta:
         model = User_Support_Ticket
         fields = ['title', 'message']

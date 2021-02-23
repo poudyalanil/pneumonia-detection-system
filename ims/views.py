@@ -34,7 +34,7 @@ def single_patient(requests,pk):
 def stats(requests):
     # url: /usr/stats/
     # TODO
-    pass
+    return HttpResponse("Stats TO BE DONE")
 
 def delete_patient_record(request,pk):
     info = Diagnose.objects.get(pk=pk)
