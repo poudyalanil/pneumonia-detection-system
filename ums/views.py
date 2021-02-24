@@ -316,7 +316,10 @@ def close_ticket(requests, pk):
     send_email(message=f'''Dear user your issue['<strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">{ticket.title}></strong>'] has been closed''',
                title=f"{ticket.title} has been closed | PDS Support", to=[ticket.user.user.email])
 
-    return redirect('support_tickets')
+    if requests.user.is_staff:
+        return redirect('support_tickets')
+    else:
+        return redirect('user_support')  
 
 
 def close_ticket_user(requests, pk):

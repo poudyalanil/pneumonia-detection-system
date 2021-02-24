@@ -14,7 +14,7 @@
 
 
   <form method="POST" enctype="multipart/form-data">
-    {{form|crispy}}
+    {{form|safe}}
 
 
 
@@ -27,6 +27,7 @@
 <br>
 <hr>
 <br>
+{%if tickets%}
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -43,16 +44,17 @@
     <tr>
 
       <td>{{ticket.title}}</td>
-      <td>{{ticket.message}}</td>
+      <td>{{ticket.message|safe}}</td>
       <td>{{ticket.time}}</td>
       <td>
         <a href="/admin/mg-tickets/del/{{ticket.id}}">
-          <button class="btn btn-danger">Close Issue</button>
+          <input type="button" class="btn btn-danger" value="Close Issue">
         </a>
     </tr>
     {%endfor%}
   </tbody>
 </table>
+{%endif%}
 </div>
 
 <script>
