@@ -11,5 +11,9 @@ urlpatterns = [
     path('usr/patients/<int:pk>', views.single_patient, name='single_patient'),
     path('usr/patients/del/<int:pk>', views.delete_patient_record, name='delete_record'),
 
+    path('usr/charts/city/pie',views.get_chart_pie_data),
+    path('usr/charts/date/line',views.get_chart_line_data),
+
+
 
 ]

@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('ums.urls')),
     path('', include('ims.urls')),
     path('', include('diagnose.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \

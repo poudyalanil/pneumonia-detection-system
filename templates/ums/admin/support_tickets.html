@@ -3,14 +3,12 @@
 <title>Admin| Dashboard</title>
 
 <style>
-
-    .card{
-        background-image: url(https://i.imgur.com/kgDsRym.jpg);
-        background-repeat:no-repeat;
-        background-size:cover;
-        /* filter: blur(5px); */
-    }
-    
+  .card {
+    background-image: url(https://i.imgur.com/kgDsRym.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* filter: blur(5px); */
+  }
 </style>
 
 {%endblock%}
@@ -19,35 +17,53 @@
 
 <div class="container">
 
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Issuer</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Action</th>
-     
-
-    </tr>
-  </thead>
-  <tbody>
-    {%for ticket in tickets%}
-    <tr>
-      <td >{{ticket.user.user.username}}</td>
-      <td>{{ticket.title}}</td>
-      <td >{{ticket.message}}</td>
-      <td >
-        <a href="/usr/support/del/{{ticket.id}}">
-      <button  class="btn btn-danger">Close Issue</button>
-      </a>
-      </td>
-    </tr>
-    {%endfor%}
+  {%if tickets%}
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Issuer</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Action</th>
 
 
-  </tbody>
- 
-</table>
+      </tr>
+    </thead>
+    <tbody>
+      {%for ticket in tickets%}
+      <tr>
+        <td>{{ticket.user.user.username}}</td>
+        <td>{{ticket.title}}</td>
+        <td>{{ticket.message}}</td>
+        <td>
+          <a href="/usr/support/del/{{ticket.id}}">
+            <button class="btn btn-danger">Close Issue</button>
+          </a>
+        </td>
+      </tr>
+      {%endfor%}
+
+
+    </tbody>
+
+  </table>
+  {%else%}
+  <div style="
+    
+     margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+    ">
+
+    <h5>
+      No Active tickets!!
+    </h5>
+
+  </div>
+  {%endif%}
 </div>
 
 

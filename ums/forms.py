@@ -20,7 +20,7 @@ class Register_Form(forms.ModelForm):
         user = super().save(commit=False)
 
         user.set_password(self.cleaned_data['password'])
-        if commit:
+        if commit:  
             user.save()
             return user
 
@@ -55,7 +55,9 @@ class Normal_User_Update_Form(forms.ModelForm):
 
 
 class Issue_New_Ticket(forms.ModelForm):
+    message = forms.CharField(widget=SummernoteWidget())
     
     class Meta:
         model = User_Support_Ticket
         fields = ['title', 'message']
+        

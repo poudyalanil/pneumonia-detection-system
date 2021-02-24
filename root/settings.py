@@ -163,3 +163,5 @@ cloudinary.config(
   api_key = "189186639598883", 
   api_secret = "C0E4gkwAitl1xpKIaXPB5-8P39s" 
 )
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'
