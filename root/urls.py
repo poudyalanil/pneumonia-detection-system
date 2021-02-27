@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('ums.urls')),
     path('', include('ims.urls')),
     path('', include('diagnose.urls')),
+    path('blog', include('blog.urls')),
     path('summernote/', include('django_summernote.urls')),
 ]
 if settings.DEBUG:

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'diagnose',
     'cloudinary',
     'django_summernote',
+    'blog'
 ]
 
 MIDDLEWARE = [
