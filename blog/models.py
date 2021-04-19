@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 class Tags(models.Model):
     tag = models.CharField(max_length=255)
@@ -13,6 +14,8 @@ class Blog(models.Model):
     tag =  models.ManyToManyField(Tags)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     author = models.CharField(max_length=200,default=' ')
+    content= models.TextField(blank=True)
+    feature_image = CloudinaryField(null=True,blank=True)
     
 
 

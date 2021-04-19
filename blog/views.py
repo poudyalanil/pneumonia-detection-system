@@ -12,4 +12,6 @@ def edit_blog(title):
 
 def read_blog(title):
     return HttpResponse("TODO")
-    
+
+def notify_all_users():
+    pass
