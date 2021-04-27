@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import Create_New_Blog,Create_New_Category,Create_New_Tag
 from .models import Blog,Tags,Category
+from django.contrib.auth.decorators import login_required
+
 
 
 def blog_index(request):
@@ -10,6 +12,7 @@ def blog_index(request):
     print(all_blogs)
     return render(request,"blog/index.html",context={"featured":all_blogs,"all_blogs":all_blogs})
 
+@login_required(login_url='/login')
 def new_blog(request):
 
     form = Create_New_Blog(request.POST,request.FILES)
@@ -30,6 +33,7 @@ def new_blog(request):
     #TODO  21th April
     return render(request,"blog/new.html",context=context)
 
+@login_required(login_url='/login')
 def edit_blog(title):
     #TODO  21th April
     return HttpResponse("TODO")
@@ -38,6 +42,7 @@ def read_blog(title):
     #TODO  19th April
     return HttpResponse("TODO")
 
+@login_required(login_url='/login')
 def new_tag(request):
     form = Create_New_Tag(request.POST)
     context ={}
@@ -52,7 +57,7 @@ def new_tag(request):
             'form':form
         }
     return render(request,"blog/new.html",context=context)
-
+@login_required(login_url='/login')
 def new_category(request):
     #TODO  19th April
 
@@ -68,12 +73,12 @@ def new_category(request):
             'form':form
         }
     return render(request,"blog/new.html",context=context)
-
+@login_required(login_url='/login')
 def notify_all_users():
 
 
     #TODO  21th April
     pass
-
+@login_required(login_url='/login')
 def notify_me():
     pass
