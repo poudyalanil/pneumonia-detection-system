@@ -14,7 +14,7 @@
 
 
   <form method="POST" enctype="multipart/form-data">
-    {{form|safe}}
+    {{form|crispy|safe}}
 
 
 
@@ -59,9 +59,11 @@
 
 <script>
   $('#summernote').summernote({
-    placeholder: 'Hello stand alone ui',
+    placeholder: 'Write your content here',
     tabsize: 2,
     height: 120,
+    width: 200,
+
     toolbar: [
       ['style', ['style']],
       ['font', ['bold', 'underline', 'clear']],

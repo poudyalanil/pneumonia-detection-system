@@ -4,8 +4,16 @@ from cloudinary.models import CloudinaryField
 class Tags(models.Model):
     tag = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.tag
+
+
 class Category(models.Model):
     category =  models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.category
+
 
 
 class Blog(models.Model):

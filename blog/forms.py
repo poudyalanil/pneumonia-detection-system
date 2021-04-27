@@ -13,6 +13,8 @@ class Create_New_Category(forms.ModelForm):
         fields = '__all__'
 
 class Create_New_Blog(forms.ModelForm):
+    content = forms.CharField(widget=SummernoteWidget())
+
     class Meta:
         model = Blog
         fields = '__all__'
