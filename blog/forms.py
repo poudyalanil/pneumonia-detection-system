@@ -18,4 +18,14 @@ class Create_New_Blog(forms.ModelForm):
     class Meta:
         model = Blog
         fields = '__all__'
-        
+        exclude = ['slug']
+ 
+
+class Edit_Blog(forms.ModelForm):
+    content = forms.CharField(widget=SummernoteWidget())
+
+    class Meta:
+        model = Blog
+        fields = '__all__'
+        exclude = ['slug','author']
+ 
