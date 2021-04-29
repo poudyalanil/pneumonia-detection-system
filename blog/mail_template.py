@@ -120,7 +120,7 @@ def email(image,title,content,link):
                                             <tr>
                                                 <td class="em_blue em_center" align="left" valign="top"
                                                     style="font-family: Arial, sans-serif; font-size: 20px; line-height: 24px; color:#264780; font-weight:bold;">
-                                                    Blog TITLE</td>
+                                                    {title}</td>
                                             </tr>
                                             <tr>
                                                 <td height="8" style="height:8px; font-size:0px; line-height:0px;">

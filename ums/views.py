@@ -178,14 +178,8 @@ data = json.loads(resp.read())[random.randint(0,242)]['quote']
 # @admin_required()
 def admin_dashboard(requests):
 
-    # print(requests.user.normal_user.profile_pic)
     normal_users = User.objects.filter(is_staff=False).count()
     admin_users = User.objects.filter(is_staff=True).count()
-
-
-    
-
-
     context = {
         'normal_user_count': normal_users,
         'admin_user_count': admin_users,
