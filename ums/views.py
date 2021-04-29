@@ -7,10 +7,13 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib import messages
 from .forms import Register_Form, Normal_User_Form, User_Update_Form, Normal_User_Update_Form, Issue_New_Ticket
 from django.contrib.auth.models import User
+from blog.models import Blog
 from .models import Normal_User, User_Support_Ticket
 from datetime import datetime
 from django.core.mail import send_mail
 # from .decorators import login_required
+import json,urllib,urllib.request
+from diagnose.models import Diagnose
 
 from django.contrib.auth.decorators import login_required
 from .decorators import admin_required
@@ -25,6 +28,11 @@ from . import mail_template
 ######################
 ##### general   ####
 ######################
+
+
+
+
+
 def index(requests):
     # url: /
     return render(requests, 'ums/index.html')
@@ -68,9 +76,6 @@ def log_out(requests):
     return redirect('homepage')
 
 
-def request_user_register(requests):
-
-    pass
 
 
 ######################
@@ -159,6 +164,12 @@ def edit_profile(requests):
 ##### admin side  ####
 ######################
 
+blogs = Blog.objects.all()
+total_tickets =User_Support_Ticket.objects.all().count()
+total_blogs = blogs.count()
+total_tests = Diagnose.objects.all().count()
+latest_blog_slug = Blog.objects.last().slug
+
 
 @login_required(login_url='/login')
 # @admin_required()
@@ -168,9 +179,22 @@ def admin_dashboard(requests):
     normal_users = User.objects.filter(is_staff=False).count()
     admin_users = User.objects.filter(is_staff=True).count()
 
+    url = "https://gist.githubusercontent.com/poudyalanil/d674998150d205af93414a361f2cf0e9/raw/997e38f3164604f44e1df5f7731dc277a3840755/quotes.json"
+    resp = urllib.request.urlopen(url)
+    data = json.loads(resp.read())[random.randint(0,242)]['quote']
+    
+    
+
+
     context = {
         'normal_user_count': normal_users,
         'admin_user_count': admin_users,
+        'quote':data,
+        'blog':total_blogs,
+        'ticket':total_tickets,
+        'test':total_tests,
+        'slug':latest_blog_slug,
+
     }
 
     return render(requests, 'ums/admin/admin_dashboard.html', context=context)
