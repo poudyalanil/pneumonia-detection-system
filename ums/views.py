@@ -169,6 +169,9 @@ total_tickets =User_Support_Ticket.objects.all().count()
 total_blogs = blogs.count()
 total_tests = Diagnose.objects.all().count()
 latest_blog_slug = Blog.objects.last().slug
+url = "https://gist.githubusercontent.com/poudyalanil/d674998150d205af93414a361f2cf0e9/raw/997e38f3164604f44e1df5f7731dc277a3840755/quotes.json"
+resp = urllib.request.urlopen(url)
+data = json.loads(resp.read())[random.randint(0,242)]['quote']
 
 
 @login_required(login_url='/login')
@@ -179,10 +182,7 @@ def admin_dashboard(requests):
     normal_users = User.objects.filter(is_staff=False).count()
     admin_users = User.objects.filter(is_staff=True).count()
 
-    url = "https://gist.githubusercontent.com/poudyalanil/d674998150d205af93414a361f2cf0e9/raw/997e38f3164604f44e1df5f7731dc277a3840755/quotes.json"
-    resp = urllib.request.urlopen(url)
-    data = json.loads(resp.read())[random.randint(0,242)]['quote']
-    
+
     
 
 
