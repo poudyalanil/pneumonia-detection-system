@@ -42,9 +42,28 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Blogs <span class="sr-only">(current)</span></a>
                     </li>
+
+                    {%if request.user.is_authenticated%}
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="/login"">Login➡</a>
-					</li>
+                        <a class="nav-link" href="/blog/new">
+                            <button class="btn-sm btn-primary">
+                                New Story
+                            </button>
+                        </a>
+                    </li>
+                    {%endif%}
+                    <li class="nav-item">
+                        {%if request.user.is_authenticated%}
+
+                        <a class="nav-link" style="color: rgb(43, 133, 133);" href="/logout">Log Out
+                            <strong>{{request.user.first_name}}</strong></a>
+
+                        {%else%}
+                        <a class=" nav-link" style="color: rgb(43, 133, 133);" target="_blank" href="/login"">Login ➡</a>
+
+                        {%endif%}					</li>
+
+                       
 
 				</ul>
 				<!-- End Menu -->
@@ -54,11 +73,7 @@
 			</div>
 		</div>
 	</nav>
-    <!-- End Nav
-================================================== -->
 
-    <!-- Begin Article
-================================================== -->
     <div class=" container">
                             <div class="row">
 
@@ -74,22 +89,30 @@
 
                                         <!-- Begin Top Meta -->
                                         <div class="row post-top-meta">
-                                            <div class="col-md-2">
-                                                <a href="author.html"><img class="author-thumb"
-                                                        src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
-                                                        alt="Sal"></a>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <a class="link-dark" href="author.html">Sal</a>
 
-                                                <span class="post-date">22 July 2017</span><span class="dot"></span>
+                                            <div class="col-md-10">
+                                                <a class="link-dark" href="author.html">{{blog.author}}</a>
+
+                                                <span class="post-date">{{blog.last_updated}}</span><span
+                                                    class="dot"></span>
                                             </div>
                                         </div>
                                         <!-- End Top Menta -->
 
-                                        <h1 class="posttitle">18 Things You Should Learn Before Moving Into a New Home
-                                        </h1>
+                                        <h1 class="posttitle">{{blog.title}}
 
+                                        </h1>
+                                        {%if request.user.is_authenticated%}
+                                        <span>
+                                            <a href="/blog/del/{{blog.slug}}"> <button class="btn btn-danger"
+                                                    href>Delete
+                                                    Story</button>
+                                            </a>
+                                            <a href="/blog/edit/{{blog.slug}}">
+                                                <button class="btn btn-info">Edit Story</button>
+                                            </a>
+                                        </span>
+                                        {%endif%}
                                     </div>
 
                                     <!-- Begin Featured Image -->
@@ -98,17 +121,19 @@
 
                                     <!-- Begin Post Content -->
                                     <div class="article-post">
-                                        Blog Goes Here
+                                        {{blog.content|safe}}
                                     </div>
                                     <!-- End Post Content -->
 
                                     <!-- Begin Tags -->
+                                    <br><br>
                                     <div class="after-post-tags">
                                         <ul class="tags">
-                                            <li><a href="#">Design</a></li>
-                                            <li><a href="#">Growth Mindset</a></li>
-                                            <li><a href="#">Productivity</a></li>
-                                            <li><a href="#">Personal Growth</a></li>
+                                            {%for i in blog.tag.all%}
+                                            <li><a href="#">{{i}}</a></li>
+
+                                            {%endfor%}
+
                                         </ul>
                                     </div>
                                     <!-- End Tags -->
@@ -118,39 +143,33 @@
 
                             </div>
             </div>
-            <!-- End Article
-================================================== -->
 
-
-            <!-- Begin Related
-================================================== -->
             <div class="graybg">
                 <div class="container">
                     <div class="row listrecent listrelated">
 
                         <!-- begin post -->
+                        {%for blog in recommend%}
                         <div class="col-md-4">
                             <div class="card">
-                                <a href="post.html">
-                                    <img class="img-fluid img-thumb" src="assets/img/demopic/9.jpg" alt="">
+                                <a href="/blog/read/{{blog.slug}}">
+                                    <img class="img-fluid img-thumb" style="height: 100px;"
+                                        src="{{blog.feature_image.url}}" alt="">
                                 </a>
                                 <div class="card-block">
-                                    <h2 class="card-title"><a href="post.html">Best recreational places to visit on a
-                                            holiday</a></h2>
+                                    <h2 class="card-title"><a href="/blog/read/{{blog.slug}}">{{blog.title}}</a></h2>
                                     <div class="metafooter">
                                         <div class="wrapfooter">
-                                            <span class="meta-footer-thumb">
-                                                <a href="author.html"><img class="author-thumb"
-                                                        src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
-                                                        alt="Sal"></a>
-                                            </span>
+
                                             <span class="author-meta">
-                                                <span class="post-name"><a href="author.html">Sal</a></span><br />
-                                                <span class="post-date">22 July 2017</span><span
-                                                    class="dot"></span><span class="post-read">6 min read</span>
+                                                <span class="post-name"><a
+                                                        href="author.html">{{blog.author}}</a></span><br />
+                                                <span class="post-date">{{blog.last_updated}}</span><span
+                                                    class="dot"></span>
                                             </span>
-                                            <span class="post-read-more"><a href="post.html" title="Read Story"><svg
-                                                        class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25">
+                                            <span class="post-read-more"><a href="/blog/read/{{blog.slug}}"
+                                                    title="Read Story"><svg class="svgIcon-use" width="25" height="25"
+                                                        viewbox="0 0 25 25">
                                                         <path
                                                             d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z"
                                                             fill-rule="evenodd"></path>
@@ -160,74 +179,11 @@
                                 </div>
                             </div>
                         </div>
+                        {%endfor%}
                         <!-- end post -->
 
                         <!-- begin post -->
-                        <div class="col-md-4">
-                            <div class="card">
-                                <a href="post.html">
-                                    <img class="img-fluid img-thumb" src="assets/img/demopic/8.jpg" alt="">
-                                </a>
-                                <div class="card-block">
-                                    <h2 class="card-title"><a href="post.html">How travelling can change your life</a>
-                                    </h2>
-                                    <div class="metafooter">
-                                        <div class="wrapfooter">
-                                            <span class="meta-footer-thumb">
-                                                <a href="author.html"><img class="author-thumb"
-                                                        src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
-                                                        alt="Sal"></a>
-                                            </span>
-                                            <span class="author-meta">
-                                                <span class="post-name"><a href="author.html">Sal</a></span><br />
-                                                <span class="post-date">22 July 2017</span><span
-                                                    class="dot"></span><span class="post-read">6 min read</span>
-                                            </span>
-                                            <span class="post-read-more"><a href="post.html" title="Read Story"><svg
-                                                        class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25">
-                                                        <path
-                                                            d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z"
-                                                            fill-rule="evenodd"></path>
-                                                    </svg></a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end post -->
 
-                        <!-- begin post -->
-                        <div class="col-md-4">
-                            <div class="card">
-                                <a href="post.html">
-                                    <img class="img-fluid img-thumb" src="assets/img/demopic/7.jpg" alt="">
-                                </a>
-                                <div class="card-block">
-                                    <h2 class="card-title"><a href="post.html">Little red dress and a perfect summer</a>
-                                    </h2>
-                                    <div class="metafooter">
-                                        <div class="wrapfooter">
-                                            <span class="meta-footer-thumb">
-                                                <a href="author.html"><img class="author-thumb"
-                                                        src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
-                                                        alt="Sal"></a>
-                                            </span>
-                                            <span class="author-meta">
-                                                <span class="post-name"><a href="author.html">Sal</a></span><br />
-                                                <span class="post-date">22 July 2017</span><span
-                                                    class="dot"></span><span class="post-read">6 min read</span>
-                                            </span>
-                                            <span class="post-read-more"><a href="post.html" title="Read Story"><svg
-                                                        class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25">
-                                                        <path
-                                                            d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z"
-                                                            fill-rule="evenodd"></path>
-                                                    </svg></a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <!-- end post -->
 
                     </div>

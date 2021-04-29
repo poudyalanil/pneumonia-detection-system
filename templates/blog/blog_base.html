@@ -32,7 +32,7 @@
         <div class="container">
             <!-- Begin Logo -->
             <a class="navbar-brand" href="index.html">
-                Pneumonia Detectoin System | <strong>Blogs</strong>
+                Pneumonia Detection System | <strong>Blogs</strong>
                 <!-- <img src="assets/img/logo.png" alt="logo"> -->
             </a>
             <!-- End Logo -->
@@ -42,8 +42,25 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Blogs <span class="sr-only">(current)</span></a>
                     </li>
+                    {%if request.user.is_authenticated%}
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="/login"">Login➡</a>
+                        <a class="nav-link" href="/blog/new">
+                            <button class="btn-sm btn-primary">
+                                New Story
+                            </button>
+                        </a>
+                    </li>
+                    {%endif%}
+                    <li class="nav-item">
+                        {%if request.user.is_authenticated%}
+
+                        <a class="nav-link" style="color: rgb(43, 133, 133);" href="/logout">Log Out
+                            <strong>{{request.user.first_name}}</strong></a>
+
+                        {%else%}
+                        <a class=" nav-link" style="color: rgb(43, 133, 133);" target="_blank" href="/login"">Login ➡</a>
+
+                        {%endif%}
 					</li>
 
 				</ul>
@@ -59,61 +76,28 @@
 
 	<!-- Begin Site Title
 ================================================== -->
-	<div class=" container">
-                            <div class="mainheading">
-                                <h1 class="sitetitle">PDS</h1>
-                                <p class="lead">
-                                    Learn it!
-                                </p>
-                            </div>
-                            <!-- End Site Title
-================================================== -->
-
-                            <!-- Begin Featured
-	================================================== -->
 
 
-                            <!-- TODO only 4 cards -->
-                            <!-- begin post -->
+                        <div class=" container">
                             {%block featured%}
                             {%endblock%}
-                            <!-- end post -->
+            </div>
 
 
-
-                            <!-- End Featured
-	================================================== -->
-
-                            <!-- Begin List Posts
-	================================================== -->
-
-
-                            <!-- Remaining Cards -->
-                            <!-- begin post -->
-                            {%block all_blogs%}
-                            {%endblock%}
-                            <!-- end post -->
-
-
-
-                            <!-- End List Posts
-	================================================== -->
-
-                            <!-- Begin Footer
-	================================================== -->
-                            <div class="footer">
-                                <p class="pull-left">
-                                    Copyright &copy;
-                                    <script>document.write(new Date().getFullYear())</script> FYP.ANILPOUDYAL.COM.NP
-                                </p>
-                                <p class="pull-right">
-                                    Made with ♥ by <a target="_blank" href="https://www.anilpoudyal.com.np">Anil
-                                        Poudyal</a>
-                                </p>
-                                <div class="clearfix">
-                                </div>
-                            </div>
-                            <!-- End Footer
+            <div class=" container">
+                <div class="footer">
+                    <p class="pull-left">
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear())</script> FYP.ANILPOUDYAL.COM.NP
+                    </p>
+                    <p class="pull-right">
+                        Made with ♥ by <a target="_blank" href="https://www.anilpoudyal.com.np">Anil
+                            Poudyal</a>
+                    </p>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <!-- End Footer
 	================================================== -->
 
             </div>
