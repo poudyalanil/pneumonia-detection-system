@@ -3,14 +3,31 @@
 <title>Admin| Dashboard</title>
 
 <style>
+  .card1 {
+    background-image: url(https://i.imgur.com/kgDsRym.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* filter: blur(5px); */
+  }
 
-    .card{
-        background-image: url(https://i.imgur.com/kgDsRym.jpg);
-        background-repeat:no-repeat;
-        background-size:cover;
-        /* filter: blur(5px); */
-    }
-    
+  .card2 {
+    background-image: url(https://picsum.photos/seed/picsum/200/300/?blur=10);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* filter: blur(5px); */
+  }
+
+  .card3 {
+    background-image: url(https://picsum.photos/id/502/200/300.webp/?blur=10);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* filter: blur(5px); */
+  }
+
+  .card3:hover {
+    border: 2px solid rgb(15, 141, 158);
+    padding: -2px;
+  }
 </style>
 
 {%endblock%}
@@ -19,26 +36,104 @@
 
 
 <div class="row">
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h1 class="card-title" style="color: white;">{{normal_user_count}}</h1>
-          <h3 class="card-text" style="color: white;">Total Numbers of Normal Users</h3>
-          <a href="#" class="btn btn-primary">Manage Normal Users</a>
-        </div>
+  <div class="col-sm-6">
+    <div class="card1">
+      <div class="card-body">
+        <h1 class="card-title" style="color: white;">{{normal_user_count}}</h1>
+        <h3 class="card-text" style="color: white;">Total Numbers of Normal Users</h3>
+        <a href="#" class="btn btn-primary">Manage Normal Users</a>
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h1 class="card-title" style="color: white;">{{admin_user_count}}</h1>
-          <h3 class="card-text" style="color: white;">Total Numbers of Admin Users</h3>
-          <a href="#" class="btn btn-primary">Manage Admins</a>
-        </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card1">
+      <div class="card-body">
+        <h1 class="card-title" style="color: white;">{{admin_user_count}}</h1>
+        <h3 class="card-text" style="color: white;">Total Numbers of Admin Users</h3>
+        <a href="#" class="btn btn-primary">Manage Admins</a>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<h2>Quick Stats</h2>
+<hr>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card2">
+      <div class="card-body">
+        <h1 class="card-title" style="color: white;">{{ticket}}</h1>
+        <h3 class="card-text" style="color: white;">Support Active Tickets</h3>
+        <a href="/admin/mg-tickets" class="btn-sm btn-info">View All</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card2">
+      <div class="card-body">
+        <h1 class="card-title" style="color: white;">{{blog}}</h1>
+        <h3 class="card-text" style="color: white;">Published Blogs</h3>
+        <a href="/blog" class="btn-sm btn-info">Read Blogs</a>
       </div>
     </div>
   </div>
 
+  <div class="col-sm-4">
+    <div class="card2">
+      <div class="card-body">
+        <h1 class="card-title" style="color: white;">{{test}}</h1>
+        <h3 class="card-text" style="color: white;">Total Tests</h3>
+        <a href="#" class="btn-sm btn-info">Try Test</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+<h2>Essential Links</h2>
+<hr>
+<div class="row">
+  <div class="col-sm-2">
+    <a href="/usr/home" target="_blank">
+      <div class="card3">
+        <div class="card-body">
+          <center>
+            <h5 class="card-text" style="color: white;">User View</h5>
+          </center>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-sm-2">
+    <a href="/blog/read/{{slug}}" target="_blank">
+      <div class="card3">
+        <div class="card-body">
+          <center>
+            <h5 class="card-text" style="color: white;">Latest Blog</h5>
+          </center>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-sm-2">
+    <a href="github.com/poudyalanil/pneumonia-detection/system">
+      <div class="card3">
+        <div class="card-body">
+          <center>
+            <h5 class="card-text" style="color: white;">Repository</h5>
+          </center>
+        </div>
+      </div>
+    </a>
+  </div>
+
+
+
+</div>
 
 
 
