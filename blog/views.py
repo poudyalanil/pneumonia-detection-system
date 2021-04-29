@@ -101,8 +101,29 @@ def new_category(request):
         }
     return render(request,"blog/new.html",context=context)
 
+from . import mail_template
+from django.contrib.auth.models import User
+import requests
+
 def notify_all_users():
-    #TODO
-    print("Hello World")
+    blog = Blog.objects.last()
+    image = blog.feature_image.url
+    content = blog.content
+    title = blog.title
+    link = "fyp.anilpoudyal.com.np/blog/read/"+blog.slug
+    email_content= mail_template.email(image,title,content,link)
+
+    user_email = User.objects.filter(is_active=True).values_list('email', flat=True)
+
+    return requests.post(
+        "https://api.eu.mailgun.net/v3/anilpoudyal.com.np/messages",
+        auth=("api", "04eebd0cbfea5e49916810d84ae1ad96-e5da0167-c4002268"),
+        data={"from": "fyp@anilpoudyal.com.np",
+            "bcc": user_email,
+            "subject": title,
+            'html':email_content,
+            })
+
+        
 
 
