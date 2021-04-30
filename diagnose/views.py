@@ -9,7 +9,7 @@ import os
 import time
 
 
-BASE_API_URL = 'https://api-anil.herokuapp.com/'
+BASE_API_URL = 'http://127.0.0.1:5000/'
 
 
 @csrf_exempt
