@@ -9,7 +9,9 @@ import os
 import time
 
 
-BASE_API_URL = 'http://127.0.0.1:5000/'
+BASE_API_URL = 'http://api.fyp.anilpoudyal.com.np'
+
+# BASE_API_URL = 'http://127.0.0.1:5000/'
 
 
 @csrf_exempt
