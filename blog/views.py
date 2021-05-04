@@ -41,7 +41,7 @@ def edit_blog(request,slug):
 
         if update_form.is_valid():
             update_form.save()
-            notify_all_users()
+            # notify_all_users()
             return redirect('blog_home')
     else:
            update_form = Edit_Blog(instance =blog)
@@ -108,7 +108,7 @@ import requests
 def notify_all_users():
     blog = Blog.objects.last()
     image = blog.feature_image.url
-    content = blog.content[:80]
+    content = blog.content[:100]
     title = blog.title
     link = "fyp.anilpoudyal.com.np/blog/read/"+blog.slug
     email_content= mail_template.email(image,title,content,link)
