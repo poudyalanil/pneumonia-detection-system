@@ -108,21 +108,24 @@ import requests
 def notify_all_users():
     blog = Blog.objects.last()
     image = blog.feature_image.url
-    content = blog.content
+    content = blog.content[:80]
     title = blog.title
     link = "fyp.anilpoudyal.com.np/blog/read/"+blog.slug
     email_content= mail_template.email(image,title,content,link)
 
     user_email = User.objects.filter(is_active=True).values_list('email', flat=True)
 
-    return requests.post(
+    for email in user_email:
+        requests.post(
         "https://api.eu.mailgun.net/v3/anilpoudyal.com.np/messages",
         auth=("api", "04eebd0cbfea5e49916810d84ae1ad96-e5da0167-c4002268"),
         data={"from": "fyp@anilpoudyal.com.np",
-            "to": user_email,
+            "to": email,
             "subject": title,
             'html':email_content,
             })
+
+    return True 
 
         
 
