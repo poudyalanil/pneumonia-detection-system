@@ -94,6 +94,9 @@ DATABASES = {
         'PASSWORD': '85b1bf1ab169cf2b7206e66edc5d9f11e9720f92226fe563eb4f6e2513a8b080',
         'HOST': 'ec2-34-246-141-162.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
+        'TEST': {
+            'NAME': 'dabhtk4kotv1ko',
+        },
     }
 }
 
