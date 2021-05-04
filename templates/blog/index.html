@@ -11,14 +11,14 @@
         <div class="card">
             <div class="row">
                 <div class="col-md-5 wrapthumbnail">
-                    <a href="blog/read/{{blog.slug}}">
+                    <a href="/blog/read/{{blog.slug}}">
                         <div class="thumbnail" style="background-image: url({{blog.feature_image.url}})"">
                         </div>
                     </a>
                 </div>
                 <div class=" col-md-7">
                             <div class="card-block">
-                                <h2 class="card-title"><a href="blog/read/{{blog.slug}}">
+                                <h2 class="card-title"><a href="/blog/read/{{blog.slug}}">
                                         {{blog.title}}</a></h2>
                                 <h4 class="card-text">{{blog.content|slice:25|safe}}}</h4>
                                 <div class="metafooter">
@@ -29,7 +29,7 @@
                                                     href="author.html">{{blog.author}}</a></span><br />
                                             <span class="post-date">{{blog.last_updated}}</span>
                                         </span>
-                                        <span class="post-read-more"><a href="blog/read/{{blog.slug}}"
+                                        <span class="post-read-more"><a href="/blog/read/{{blog.slug}}"
                                                 title="Read Story"><svg class="svgIcon-use" width="25" height="25"
                                                     viewbox="0 0 25 25">
                                                     <path

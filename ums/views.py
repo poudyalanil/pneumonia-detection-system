@@ -16,10 +16,8 @@ import json,urllib,urllib.request
 from diagnose.models import Diagnose
 
 from django.contrib.auth.decorators import login_required
-from .decorators import admin_required
 import random
 import string
-import os
 import requests
 from . import mail_template
 # Create your views here.
@@ -467,6 +465,11 @@ def toggle_admin_role(requests, pk):
         return redirect('all_users')
     return redirect('all_users')
 
+def handler404(request,exception):
+    return render(request, 'ums/404.html', status=404)
+
+def handler500(request):
+    return render(request, 'ums/500.html', status=500)
 
 def send_email(title, to, message):
 
