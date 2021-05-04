@@ -9,27 +9,35 @@
 {%endblock%}
 
 {%block content%}
+
+<h3>Stats</h3>
+<hr>
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <center>
-                <h3>City Chart</h3>
-            </center>
-            <canvas id="pie-chart"></canvas>
+    <center>
+        <div class="row">
+            <div class="col-8">
+                <center>
+                    <h3>City Chart</h3>
+                </center>
+                <canvas id="pie-chart"></canvas>
+
+            </div>
+
+
+
 
         </div>
+        <br><br>
+        <div class="row">
+            <div class="col-8">
+                <center>
+                    <h3>Test Dates</h3>
+                </center>
 
-        <div class="col-6">
-            <center>
-                <h3>Test Dates</h3>
-            </center>
-
-            <canvas id="line-chart"></canvas>
+                <canvas id="line-chart"></canvas>
+            </div>
         </div>
-
-
-    </div>
-
+    </center>
 </div>
 
 <script>

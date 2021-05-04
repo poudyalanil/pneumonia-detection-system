@@ -3,19 +3,33 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from diagnose.models import Diagnose
 from datetime import datetime
+from ums.models import User_Support_Ticket
+from blog.models import Blog
 import random
-import json
-from django.http import HttpResponse
+import json,urllib,urllib.request
 
+
+blogs = Blog.objects.all()
+total_tickets =User_Support_Ticket.objects.all().count()
+total_blogs = blogs.count()
+total_tests = Diagnose.objects.all().count()
+latest_blog_slug = Blog.objects.last().slug
+url = "https://gist.githubusercontent.com/poudyalanil/d674998150d205af93414a361f2cf0e9/raw/997e38f3164604f44e1df5f7731dc277a3840755/quotes.json"
+resp = urllib.request.urlopen(url)
+data = json.loads(resp.read())[random.randint(0,242)]['quote']
+few_patients = Diagnose.objects.all()[:5]
 
 @login_required(login_url='/login')
 def user_homepage(requests):
-    total_test = Diagnose.objects.all().count()
-    total_patient = Diagnose.objects.values('patient_name').distinct().count()
 
+    
     context = {
-        'total_test': total_test,
-        'total_patients': total_patient ,
+        'quote':data,
+        'blog':total_blogs,
+        'ticket':total_tickets,
+        'test':total_tests,
+        'slug':latest_blog_slug,
+        'patients':few_patients,
         'current_date': datetime.now().strftime("%d %B, %Y"),
     }
     return render(requests, 'ums/user/user_dashboard.html', context=context)

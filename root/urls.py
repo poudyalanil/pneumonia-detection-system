@@ -24,9 +24,13 @@ urlpatterns = [
     path('', include('ums.urls')),
     path('', include('ims.urls')),
     path('', include('diagnose.urls')),
-    path('blog', include('blog.urls')),
+    path('blog/', include('blog.urls')),
     path('summernote/', include('django_summernote.urls')),
 ]
+
+handler404 = 'ums.views.handler404'
+handler500 = 'ums.views.handler500'
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
         static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
