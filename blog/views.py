@@ -119,7 +119,7 @@ def notify_all_users():
         "https://api.eu.mailgun.net/v3/anilpoudyal.com.np/messages",
         auth=("api", "04eebd0cbfea5e49916810d84ae1ad96-e5da0167-c4002268"),
         data={"from": "fyp@anilpoudyal.com.np",
-            "bcc": user_email,
+            "to": user_email,
             "subject": title,
             'html':email_content,
             })
