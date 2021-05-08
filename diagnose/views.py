@@ -2,7 +2,7 @@ from django.http import response
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 import requests
-from .forms import New_Test
+from .forms import New_Test, Update_Patient_info
 from django.views.decorators.csrf import csrf_exempt
 from diagnose.models import Diagnose
 import os
@@ -52,6 +52,8 @@ def new_test(request):
 def check_api_call(base_url):
     response = requests.get(base_url)
     return response.json()
+
+
 
 
 def upload_image(image):
