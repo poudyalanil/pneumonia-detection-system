@@ -17,7 +17,13 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/CSS/user_dashboard.css">
 
+    <style>
+        .active span {
 
+            text-decoration: underline white;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -67,7 +73,7 @@
                             <span>General</span>
                         </li>
                         <li class="sidebar">
-                            <a href="/usr/home">
+                            <a href="/usr/home" class="{% ifequal request.path '/usr/home' %} active {% endifequal %}">
                                 <i class="fa fa-tachometer-alt"></i>
                                 <span id="dashboard-header">Dashboard</span>
 
@@ -75,15 +81,17 @@
 
                         </li>
                         <li class="sidebar">
-                            <a href="/usr/patients">
-                                <i class="fa fa-users"></i>
+                            <a href="/usr/patients"
+                                class="{% ifequal request.path '/usr/patients' %} active {% endifequal %}">
+                                <i class=" fa fa-users"></i>
                                 <span id="user-header">Patients</span>
                             </a>
 
                         </li>
 
                         <li class="sidebar">
-                            <a href="/usr/stats">
+                            <a href="/usr/stats"
+                                class="{% ifequal request.path '/usr/stats' %} active {% endifequal %}">
                                 <i class="fa fa-chart-line"></i>
                                 <span id="gallery-header">Stats</span>
                             </a>
@@ -91,7 +99,7 @@
                         </li>
 
                         <li class="sidebar">
-                            <a href="/diagnose">
+                            <a href="/diagnose" class="{% ifequal request.path '/diagnose' %} active {% endifequal %}">
                                 <i class="fa fa-plus"></i>
                                 <span id="gallery-header">*New Test</span>
                             </a>
@@ -114,13 +122,15 @@
                             <span id="extra-header">Settings</span>
                         </li>
                         <li>
-                            <a href="/usr/profile">
+                            <a href="/usr/profile"
+                                class="{% ifequal request.path '/usr/profile' %} active {% endifequal %}">
                                 <i class="fa fa-user"></i>
                                 <span id="notice-header">Profile</span>
                             </a>
                         </li>
                         <li>
-                            <a href="/usr/support">
+                            <a href="/usr/support"
+                                class="{% ifequal request.path '/usr/support' %} active {% endifequal %}">
                                 <i class="fa fa-question"></i>
                                 <span id="notice-header">Support</span>
                             </a>

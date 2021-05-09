@@ -21,6 +21,12 @@
       overflow: hidden;
 
     }
+
+    .active {
+      color: white;
+      text-decoration: underline white;
+
+    }
   </style>
 
   {%block head%}
@@ -55,27 +61,33 @@
       </div>
       <ul class="list-unstyled components mb-5">
         <li>
-          <a href="/admin"><span class="fa fa-home mr-3"></span> Home</a>
+          <a href="/admin" class="{% ifequal request.path '/admin' %} active {% endifequal %}"><span
+              class="fa fa-home mr-3 "></span>Home</a>
         </li>
         <li>
-          <a href="/admin/mg-tickets"><span class="fa fa-comments mr-3 notif"><small
-                class="d-flex align-items-center justify-content-center">5</small></span> Support Message</a>
+          <a href="/admin/mg-tickets"
+            class="{% ifequal request.path '/admin/mg-tickets' %} active {% endifequal %}"><span
+              class="fa fa-comments mr-3"></span>Support Message</a>
         </li>
         <li>
-          <a href="/admin/mg-usr"><span class="fa fa-users mr-3" data-toggle="collapse" data-target="#userpages"></span>
-            Users</a>
+          <a href="/admin/mg-usr" class="{% ifequal request.path '/admin/mg-usr' %} active {% endifequal %}"><span
+              class="fa fa-users mr-3" data-toggle="collapse" data-target="#userpages"></span>Users</a>
         </li>
         <li>
-          <a href="/admin/profile"><span class="fa fa-user mr-3"></span> Profile</a>
+          <a href="/admin/profile" class="{% ifequal request.path '/admin/profile' %} active {% endifequal %}"><span
+              class="fa fa-user mr-3"></span>Profile</a>
         </li>
 
+
+
         <li>
-          <a href="/blog"><span class="fa fa-file-text"></span> Blogs</a>
+          <a href="/blog" class="{% ifequal request.path '/blog' %} active {% endifequal %}">
+            <span class="fa fa-file-text mr-3"></span>Blogs</a>
         </li>
 
 
         <li>
-          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          <a href="/logout"><span class="fa fa-sign-out mr-3"></span>Sign Out</a>
         </li>
       </ul>
 

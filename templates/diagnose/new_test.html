@@ -3,10 +3,27 @@
 {%block head%}
 <title>New Test</title>
 
+<style>
+    .error {
+        background-color: rgba(255, 0, 0, 0.376);
+    }
+</style>
+
 {%endblock%}
 {%block content%}
 <h3>New Test</h3>
 <hr>
+{% if messages%}
+{%for message in messages%}
+
+<div class="alert {{message.tags}}">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    {{message}}
+</div>
+
+
+{%endfor%}
+{%endif%}
 <div class="container">
     <form method="POST" enctype="multipart/form-data">
 
@@ -16,16 +33,16 @@
         <button type="submit" id="btnFetch" class="spinner-button btn btn-primary">Submit</button>
     </form>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js
+"></script>
+
     <script>
 
         $(document).ready(function () {
             $("#btnFetch").click(function () {
                 // disable button
-                $(this).prop("disabled", true);
-                // add spinner to button
-                $(this).html(
-                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
-                );
+                $.LoadingOverlay("show");
             });
         });
     </script>

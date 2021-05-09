@@ -4,21 +4,35 @@
 <title>New User</title>
 
 <style>
-
-input[type="text"],input[type="email"],input[type="password"],input[type="file"], textarea{
-        background-color: rgba(130, 195, 233, 0.13);
-    }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"],
+  textarea {
+    background-color: rgba(130, 195, 233, 0.13);
+  }
 </style>
 
 {%endblock%}
 
 {%block content%}
 <div class="container">
-<form method="POST" enctype="multipart/form-data">
+  {% if messages%}
+  {%for message in messages%}
 
-{%csrf_token%}
-{{main_form |crispy}}
-{{normal_form |crispy}}
+  <div class="alert alert-{{message.tags}}">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    {{message}}
+  </div>
+
+
+  {%endfor%}
+  {%endif%}
+  <form method="POST" enctype="multipart/form-data">
+
+    {%csrf_token%}
+    {{main_form |crispy}}
+    {{normal_form |crispy}}
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
