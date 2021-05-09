@@ -11,6 +11,7 @@ from django.contrib import messages
 
 
 
+
 BASE_API_URL = 'http://api.fyp.anilpoudyal.com.np'
 
 # BASE_API_URL = 'http://127.0.0.1:5000/'
@@ -61,6 +62,8 @@ def update_patient_records(request,pk):
 
         if update_form.is_valid:
             update_form.save()
+            messages.success(request, "Success: Patient Details Updated")
+
             return redirect("/usr/patients")
     else:
         update_form = Update_Patient_info(instance=patient)

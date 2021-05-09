@@ -16,6 +16,9 @@ import json,urllib,urllib.request
 from diagnose.models import Diagnose
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
+
 import random
 import string
 import requests
@@ -110,11 +113,6 @@ def user_support(requests):
     return render(requests, 'ums/user/support.html', context)
 
 
-@login_required(login_url='/login')
-def support(requests):
-    # url: /usr/support/
-    # TODO
-    pass
 
 
 @login_required(login_url='/login')
@@ -147,7 +145,7 @@ def edit_profile(requests):
             normal_user = update_normal_form.save(commit=False)
             normal_user.user = updated_user
             normal_user.save()
-            messages.success(requests, "Success: Details Updated")
+            messages.info(requests, "Details Updated Please Sign In Again")
 
             return redirect("all_users")
 
@@ -178,7 +176,7 @@ data = json.loads(resp.read())[random.randint(0,242)]['quote']
 
 
 @login_required(login_url='/login')
-# @admin_required()
+@staff_member_required(login_url='/login')
 def admin_dashboard(requests):
 
     normal_users = User.objects.filter(is_staff=False).count()
@@ -198,6 +196,7 @@ def admin_dashboard(requests):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def new_user(requests):
     if requests.POST:
         main_form = Register_Form(requests.POST)
@@ -302,7 +301,7 @@ def edit_user(requests, pk):
 
     return render(requests, "ums/admin/edit_user.html", context)
 
-
+@staff_member_required(login_url='/login')
 def reset_password(request, pk):
     user = User.objects.get(pk=pk)
     new_password = ''.join(random.choices(
@@ -323,7 +322,7 @@ def reset_password(request, pk):
 
     return redirect("all_users")
 
-
+@staff_member_required(login_url='/login')
 def admin_profile(requests):
     user = requests.user
     return render(requests, "ums/admin/admin_profile.html", context={'user': user})
@@ -360,6 +359,7 @@ def close_ticket_user(requests, pk):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def all_users(requests):
     normal_user = Normal_User.objects.filter(is_request=False)
     ur =[]
@@ -369,11 +369,13 @@ def all_users(requests):
     return render(requests, "ums/admin/manage_users.html", {'users': ur,'title':"All Users",'is_request':False})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def active_users(requests):
     active_users = User.objects.filter(is_active=True)
     return render(requests, "ums/admin/manage_users.html", {'users': active_users,'title':"Active Users",'is_request':False})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def inactive_users(requests):
     inactive_users = User.objects.filter(is_active=False)
 
@@ -387,6 +389,7 @@ def inactive_users(requests):
     return render(requests, "ums/admin/manage_users.html", {'users': ur,'title':"Inactive Users",'is_request':False})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def view_request_users(requests):
 
     request_users = Normal_User.objects.filter(is_request=True)
@@ -394,6 +397,7 @@ def view_request_users(requests):
     return render(requests, "ums/admin/manage_users.html", {'users': users_list,'title':"User Requests",'is_request':True})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def search_user(requests):
     query = requests.GET['query']
     users = User.objects.filter(username__icontains=query)
@@ -402,6 +406,7 @@ def search_user(requests):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def delete_user(requests, pk):
     user = User.objects.get(pk=pk)
     print(pk)
@@ -415,6 +420,7 @@ def delete_user(requests, pk):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def toggle_admin(requests, pk):
     user = User.objects.get(pk=pk)
 
@@ -428,6 +434,7 @@ def toggle_admin(requests, pk):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def toggle_block(requests, pk):
 
     user = User.objects.get(pk=pk)
@@ -456,7 +463,7 @@ def toggle_block(requests, pk):
     # user.save()
     # return redirect('all_users')
 
-
+@staff_member_required(login_url='/login')
 def toggle_admin_role(requests, pk):
     user = User.objects.get(pk=pk)
 

@@ -5,23 +5,30 @@
 <title>Edit {{user.username}}
 </title>
 <style>
-    input[type="text"],input[type="email"],input[type="password"],input[type="file"], textarea{
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"],
+    textarea {
         background-color: rgba(130, 195, 233, 0.13);
     }
 </style>
 {%endblock%}
 
 {%block content%}
+
 <div class="container">
-<form method="POST" enctype="multipart/form-data">
+    <h2>Edit Me</h2>
+    <hr>
+    <form method="POST" enctype="multipart/form-data">
 
 
-{%csrf_token%}
-{{update_register_form |crispy}}
-{{update_normal_form |crispy}}
+        {%csrf_token%}
+        {{update_register_form |crispy}}
+        {{update_normal_form |crispy}}
 
-<button  type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
 </div>
 {%endblock%}

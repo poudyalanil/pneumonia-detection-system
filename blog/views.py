@@ -108,7 +108,7 @@ import requests
 def notify_all_users():
     blog = Blog.objects.last()
     image = blog.feature_image.url
-    content = blog.content[:100]
+    content = blog.content[:500]
     title = blog.title
     link = "fyp.anilpoudyal.com.np/blog/read/"+blog.slug
     email_content= mail_template.email(image,title,content,link)

@@ -9,16 +9,35 @@
 {%block content%}
 
 <div class="container">
+  <h2>
+    Request For User
+  </h2>
+  <hr>
+
   <form method="POST" enctype="multipart/form-data">
-  
-  {%csrf_token%}
-  {{main_form |crispy}}
-  {{normal_form |crispy}}
-  
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
-  
-  
-  
+
+    {%csrf_token%}
+    {{main_form |crispy}}
+    {{normal_form |crispy}}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <small>
+    Please fill out the form for enrolling youself into the system. The system admin will check your details and if you
+    are authentic user you will have your account activated within in the period of 24 hours of user request. If you do
+    not get any feedback from the system admin in given time please wait for the reply it may sometime get delay due to
+    high number of request.
+    <br>
+    Or you may want to contact system admin right away at <a
+      href="mailto:info@anilpoudyal.com.np">info@anilpoudyal.com.np</a>
+
+
+  </small>
+  <br>
+  <br>
+</div>
+
+
+
 {%endblock%}
