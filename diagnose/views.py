@@ -2,11 +2,14 @@ from django.http import response
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 import requests
-from .forms import New_Test
+from .forms import New_Test, Update_Patient_info
 from django.views.decorators.csrf import csrf_exempt
 from diagnose.models import Diagnose
 import os
 import time
+from django.contrib import messages
+
+
 
 
 BASE_API_URL = 'http://api.fyp.anilpoudyal.com.np'
@@ -33,12 +36,14 @@ def new_test(request):
                 this_data.analysed_image = analysed_image
                 this_data.affected_percentage = affected_percentage
                 this_data.save()
-                return redirect("all_patients")
+                messages.success(request, "Success: Test Carried Out Successfully")
+                return redirect("single_patient",pk=this_data.id)
 
             except:
                 this_data.delete()
 
             # print(response)
+        messages.error(request, "Error: Unable to Process")
         return redirect("new_test")
     else:
         new_test_form = New_Test()
@@ -48,10 +53,30 @@ def new_test(request):
 
         return render(request, 'diagnose/new_test.html', context)
 
+@csrf_exempt
+def update_patient_records(request,pk):
+    patient = Diagnose.objects.get(pk=pk)
+
+    if request.POST:
+        update_form = Update_Patient_info(data = request.POST,instance = patient)
+
+        if update_form.is_valid:
+            update_form.save()
+            messages.success(request, "Success: Patient Details Updated")
+
+            return redirect("/usr/patients")
+    else:
+        update_form = Update_Patient_info(instance=patient)
+
+    context = {'form':update_form}
+
+    return render(request,'diagnose/new_test.html',context=context)   
 
 def check_api_call(base_url):
     response = requests.get(base_url)
     return response.json()
+
+
 
 
 def upload_image(image):

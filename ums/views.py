@@ -16,6 +16,9 @@ import json,urllib,urllib.request
 from diagnose.models import Diagnose
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
+
 import random
 import string
 import requests
@@ -51,15 +54,18 @@ def sign_in(requests):
         password = requests.POST['password']
         auth_user = authenticate(username=username, password=password)
         if auth_user:
-            messages.success(requests, "Login Success")
             # requests.session['username'] = username
             login(requests, auth_user)
 
             if requests.user.is_staff:
-                return redirect("admin_dashboard")
-            else:
+                messages.success(requests, "Login Success")
 
+                return redirect("admin_dashboard")
+
+            else:
+                messages.success(requests, "Login Success")
                 return redirect('user_homepage')
+
             # TODO
         else:
             messages.error(requests, "Incorrect Credentials")
@@ -95,6 +101,7 @@ def user_support(requests):
             message = f'''Hi {requests.user.first_name},<br> your ticket with title<strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"> "{form.cleaned_data.get('title')}" </strong> has been issued at <strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">{datetime.now().strftime("%d %B, %Y")} </strong>. We are looking into issue, we will contact you once the issue has been resloved'''
             to = [requests.user.email]
             send_email(title, to, message)
+            messages.success(requests, "Success: Ticket Created")
 
             return redirect("user_support")
     else:
@@ -106,11 +113,6 @@ def user_support(requests):
     return render(requests, 'ums/user/support.html', context)
 
 
-@login_required(login_url='/login')
-def support(requests):
-    # url: /usr/support/
-    # TODO
-    pass
 
 
 @login_required(login_url='/login')
@@ -143,6 +145,7 @@ def edit_profile(requests):
             normal_user = update_normal_form.save(commit=False)
             normal_user.user = updated_user
             normal_user.save()
+            messages.info(requests, "Details Updated Please Sign In Again")
 
             return redirect("all_users")
 
@@ -173,7 +176,7 @@ data = json.loads(resp.read())[random.randint(0,242)]['quote']
 
 
 @login_required(login_url='/login')
-# @admin_required()
+@staff_member_required(login_url='/login')
 def admin_dashboard(requests):
 
     normal_users = User.objects.filter(is_staff=False).count()
@@ -193,6 +196,7 @@ def admin_dashboard(requests):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def new_user(requests):
     if requests.POST:
         main_form = Register_Form(requests.POST)
@@ -213,6 +217,7 @@ def new_user(requests):
 
                 # user = authenticate(username=username,password=password)
                 # login(requests,user)
+                messages.success(requests, "Success: User Created")
                 return redirect(new_user)
     else:
         main_form = Register_Form()
@@ -247,6 +252,7 @@ def request_new_user(requests):
                 message = f'''Hi,<strong style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"> {name}</strong><br> your user request has been received. We will process the request as soon as possible'''
 
                 send_email(to=to, title=title, message=message)
+                messages.success(requests, "Success: Your User Request is created")
 
                 # user = authenticate(username=username,password=password)
                 # login(requests,user)
@@ -280,6 +286,7 @@ def edit_user(requests, pk):
             normal_user = update_normal_form.save(commit=False)
             normal_user.user = updated_user
             normal_user.save()
+            messages.success(requests, "Success: Details Updated")
 
             return redirect("all_users")
 
@@ -294,7 +301,7 @@ def edit_user(requests, pk):
 
     return render(requests, "ums/admin/edit_user.html", context)
 
-
+@staff_member_required(login_url='/login')
 def reset_password(request, pk):
     user = User.objects.get(pk=pk)
     new_password = ''.join(random.choices(
@@ -315,7 +322,7 @@ def reset_password(request, pk):
 
     return redirect("all_users")
 
-
+@staff_member_required(login_url='/login')
 def admin_profile(requests):
     user = requests.user
     return render(requests, "ums/admin/admin_profile.html", context={'user': user})
@@ -333,8 +340,11 @@ def close_ticket(requests, pk):
                title=f"{ticket.title} has been closed | PDS Support", to=[ticket.user.user.email])
 
     if requests.user.is_staff:
+        messages.info(requests, "Success: Ticket Closed")
+
         return redirect('support_tickets')
     else:
+        messages.info(requests, "Success: Ticket Closed")
         return redirect('user_support')  
 
 
@@ -343,17 +353,13 @@ def close_ticket_user(requests, pk):
     ticket.delete()
     send_email(message=f"Dear user your issue[{ticket.title}] has been closed",
                title=f"{ticket.title} has been closed", to=ticket.user.user.email)
-
+    messages.info(requests, "Success: Ticket Closed")
     return redirect('support_tickets')
 
-# def search_user(requests,search_content):
-#       if requests.POST:
-#             search_input = requests.POST['search_input']
-
-#             if search_input.contains('@')
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def all_users(requests):
     normal_user = Normal_User.objects.filter(is_request=False)
     ur =[]
@@ -363,11 +369,13 @@ def all_users(requests):
     return render(requests, "ums/admin/manage_users.html", {'users': ur,'title':"All Users",'is_request':False})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def active_users(requests):
     active_users = User.objects.filter(is_active=True)
     return render(requests, "ums/admin/manage_users.html", {'users': active_users,'title':"Active Users",'is_request':False})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def inactive_users(requests):
     inactive_users = User.objects.filter(is_active=False)
 
@@ -381,6 +389,7 @@ def inactive_users(requests):
     return render(requests, "ums/admin/manage_users.html", {'users': ur,'title':"Inactive Users",'is_request':False})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def view_request_users(requests):
 
     request_users = Normal_User.objects.filter(is_request=True)
@@ -388,6 +397,7 @@ def view_request_users(requests):
     return render(requests, "ums/admin/manage_users.html", {'users': users_list,'title':"User Requests",'is_request':True})
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def search_user(requests):
     query = requests.GET['query']
     users = User.objects.filter(username__icontains=query)
@@ -396,6 +406,7 @@ def search_user(requests):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def delete_user(requests, pk):
     user = User.objects.get(pk=pk)
     print(pk)
@@ -409,6 +420,7 @@ def delete_user(requests, pk):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def toggle_admin(requests, pk):
     user = User.objects.get(pk=pk)
 
@@ -422,6 +434,7 @@ def toggle_admin(requests, pk):
 
 
 @login_required(login_url='/login')
+@staff_member_required(login_url='/login')
 def toggle_block(requests, pk):
 
     user = User.objects.get(pk=pk)
@@ -430,7 +443,7 @@ def toggle_block(requests, pk):
         n_user.is_request = False
         n_user.save()
     except:
-        print("Ramram")
+        print("Error")
 
     if user.is_active:
         user.is_active = False
@@ -450,7 +463,7 @@ def toggle_block(requests, pk):
     # user.save()
     # return redirect('all_users')
 
-
+@staff_member_required(login_url='/login')
 def toggle_admin_role(requests, pk):
     user = User.objects.get(pk=pk)
 

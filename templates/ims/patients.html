@@ -7,6 +7,16 @@
 
 <h3>Patients</h3>
 <hr>
+{% if messages%}
+{%for message in messages%}
+
+<div class="alert alert-{{message.tags}}">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    {{message}}
+</div>
+
+{%endfor%}
+{%endif%}
 <div class="container">
 
     <table class="table">

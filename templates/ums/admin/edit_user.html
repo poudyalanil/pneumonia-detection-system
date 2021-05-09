@@ -5,23 +5,40 @@
 <title>Edit {{user.username}}
 </title>
 <style>
-    input[type="text"],input[type="email"],input[type="password"],input[type="file"], textarea{
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"],
+    textarea {
         background-color: rgba(130, 195, 233, 0.13);
     }
 </style>
 {%endblock%}
 
 {%block content%}
+<h2>Edit Me</h2>
+<hr>
 <div class="container">
-<form method="POST" enctype="multipart/form-data">
+    {% if messages%}
+    {%for message in messages%}
+
+    <div class="alert alert-{{message.tags}}">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{message}}
+    </div>
 
 
-{%csrf_token%}
-{{update_register_form |crispy}}
-{{update_normal_form |crispy}}
+    {%endfor%}
+    {%endif%}
+    <form method="POST" enctype="multipart/form-data">
 
-<button  type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+        {%csrf_token%}
+        {{update_register_form |crispy}}
+        {{update_normal_form |crispy}}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
 </div>
 {%endblock%}
